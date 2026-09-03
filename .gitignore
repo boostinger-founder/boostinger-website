@@ -2,3 +2,9 @@
 Thumbs.db
 *.tmp
 *.log
+# Secrets and tokens
+*.txt
+*secret*
+*.key
+*.pem
+.env
