@@ -120,6 +120,26 @@
             box-shadow: 0 0 25px rgba(255, 102, 0, 0.7);
         }
 
+        header {
+            max-width: 800px;
+            width: 100%;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        header nav a {
+            color: #ff8c00;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+
+        header nav a:hover {
+            color: #ffb347;
+        }
+
         footer {
             margin-top: 3rem;
             font-size: 0.8rem;
@@ -283,6 +303,12 @@
     </style>
 </head>
 <body>
+    <header>
+        <nav>
+            <a href="index.html" style="margin-right: 1.5rem;">Home</a>
+            <a href="blog.html">Blog</a>
+        </nav>
+    </header>
     <main>
         <!-- Hero Section -->
         <img src="logo.png" alt="Boostinger Logo" class="logo fade-in">

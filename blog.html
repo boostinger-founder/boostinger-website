@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Boostinger Blog</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        /* Copy the same styles from index.html here */
+        /* Or use the same styling for consistency */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #0a0a0a;
+            color: #ffffff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            padding: 2rem;
+            background-image: radial-gradient(circle at center, #1a1a1a 0%, #000000 100%);
+        }
+        .container {
+            max-width: 800px;
+            width: 100%;
+            margin: 2rem auto;
+        }
+        h1 {
+            font-size: 2.5rem;
+            background: linear-gradient(135deg, #ffffff 0%, #ff8c00 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-transform: uppercase;
+            margin-bottom: 2rem;
+        }
+        .blog-post {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 102, 0, 0.15);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            text-align: left;
+            transition: transform 0.3s ease;
+        }
+        .blog-post:hover {
+            transform: translateY(-3px);
+        }
+        .blog-post h2 {
+            color: #ff8c00;
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+        }
+        .blog-post .date {
+            color: #666;
+            font-size: 0.8rem;
+            margin-bottom: 0.8rem;
+        }
+        .blog-post p {
+            color: #b0b0b0;
+            line-height: 1.6;
+        }
+        .blog-post a {
+            color: #ff8c00;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        .blog-post a:hover {
+            text-decoration: underline;
+        }
+        .back-link {
+            display: inline-block;
+            margin-top: 2rem;
+            color: #ff8c00;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        .back-link:hover {
+            text-decoration: underline;
+        }
+        footer {
+            margin-top: 3rem;
+            font-size: 0.8rem;
+            color: #444;
+            letter-spacing: 1px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📝 Boostinger Blog</h1>
+
+        <!-- Blog Post 1 -->
+        <div class="blog-post">
+            <h2>5 Reasons Your Business Needs a Website in 2026</h2>
+            <div class="date">September 2, 2026</div>
+            <p>In today's digital-first world, having a website isn't optional—it's essential. Here's why your business needs to be online...</p>
+            <a href="#">Read More →</a>
+        </div>
+
+        <!-- Blog Post 2 -->
+        <div class="blog-post">
+            <h2>How AI-Powered SEO Transforms Your Traffic</h2>
+            <div class="date">August 28, 2026</div>
+            <p>Discover how artificial intelligence is revolutionizing search engine optimization and helping businesses grow faster than ever...</p>
+            <a href="#">Read More →</a>
+        </div>
+
+        <!-- Blog Post 3 -->
+        <div class="blog-post">
+            <h2>Choosing the Right Web Design Tier for Your Business</h2>
+            <div class="date">August 20, 2026</div>
+            <p>Not sure whether you need Basic, Standard, or Premium? Here's a breakdown to help you decide...</p>
+            <a href="#">Read More →</a>
+        </div>
+
+        <a href="index.html" class="back-link">← Back to Home</a>
+    </div>
+
+    <footer>
+        &copy; 2026 Boostinger. All rights reserved.
+    </footer>
+</body>
+</html>
