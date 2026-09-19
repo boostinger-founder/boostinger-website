@@ -86,6 +86,8 @@
 
   /* Agreement section */
   #agreement-section { display: none; margin-top: 26px; padding-top: 24px; border-top: 1px solid #1e2a44; }
+
+  .agreement-wrap { position: relative; }
   .agreement-text {
     background: #0a1120;
     border: 1px solid #1e2a44;
@@ -117,7 +119,66 @@
   }
   .fee-box strong { color: #fff; }
 
-  /* Signature */
+  /* Fade gradient indicating more content below */
+  .agreement-wrap::after {
+    content: '';
+    position: absolute;
+    left: 1px;
+    right: 1px;
+    bottom: 1px;
+    height: 50px;
+    border-radius: 0 0 10px 10px;
+    background: linear-gradient(to bottom, rgba(10,17,32,0) 0%, rgba(10,17,32,1) 90%);
+    pointer-events: none;
+    opacity: 1;
+    transition: opacity 0.3s;
+  }
+  .agreement-wrap.at-bottom::after { opacity: 0; }
+
+  /* Scroll hint */
+  .scroll-hint {
+    text-align: center;
+    font-size: 0.85rem;
+    color: #ff7a1a;
+    font-weight: 600;
+    margin: 14px 0 0;
+    padding: 10px;
+    border: 1px dashed #2a3a5c;
+    border-radius: 8px;
+    background: #0e1626;
+    transition: opacity 0.3s;
+  }
+  .scroll-hint.hidden { display: none; }
+
+  /* Signature block — hidden until scrolled to bottom */
+  #signature-block { display: none; margin-top: 20px; padding-top: 20px; border-top: 1px solid #1e2a44; }
+
+  /* Name + Email fields */
+  .field-row { margin-bottom: 14px; }
+  .field-row label {
+    display: block;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #e6edf6;
+    margin-bottom: 6px;
+  }
+  .field-row input {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1px solid #2a3a5c;
+    border-radius: 8px;
+    background: #0a1120;
+    color: #fff;
+    font-size: 0.95rem;
+    font-family: inherit;
+    transition: border-color 0.15s;
+  }
+  .field-row input:focus {
+    outline: none;
+    border-color: #ff7a1a;
+  }
+  .field-row input::placeholder { color: #4b5a75; }
+
   .signature-area {
     border: 2px dashed #2a3a5c;
     border-radius: 10px;
@@ -208,17 +269,35 @@
     <!-- 2. AGREEMENT + SIGNATURE -->
     <div id="agreement-section">
       <h2>Service Agreement</h2>
-      <div class="agreement-text" id="agreement-body"></div>
 
-      <p style="margin-top:18px;"><strong style="color:#fff;">Please sign below:</strong></p>
-      <div class="signature-area">
-        <canvas id="signature-pad"></canvas>
+      <div class="agreement-wrap" id="agreement-wrap">
+        <div class="agreement-text" id="agreement-text"></div>
       </div>
-      <div class="sig-controls">
-        <button class="sig-btn" id="clear-sig">Clear</button>
-        <button class="sig-btn primary" id="confirm-sig">Confirm Signature & Continue to Payment</button>
+
+      <p class="scroll-hint" id="scroll-hint">↓ Scroll to the bottom of the agreement to continue</p>
+
+      <!-- Signature block: hidden until scrolled to bottom -->
+      <div id="signature-block">
+        <p><strong style="color:#fff;">Your information</strong></p>
+        <div class="field-row">
+          <label for="client-name">Full Name</label>
+          <input type="text" id="client-name" placeholder="e.g. Jane Smith" autocomplete="name">
+        </div>
+        <div class="field-row">
+          <label for="client-email">Email Address</label>
+          <input type="email" id="client-email" placeholder="e.g. jane@yourbusiness.com" autocomplete="email">
+        </div>
+
+        <p style="margin-top:18px;"><strong style="color:#fff;">Please sign below:</strong></p>
+        <div class="signature-area">
+          <canvas id="signature-pad"></canvas>
+        </div>
+        <div class="sig-controls">
+          <button class="sig-btn" id="clear-sig">Clear</button>
+          <button class="sig-btn primary" id="confirm-sig">Confirm Signature & Continue to Payment</button>
+        </div>
+        <p id="sig-error">Please complete all fields and draw your signature.</p>
       </div>
-      <p id="sig-error">Please draw your signature first.</p>
     </div>
 
     <!-- 3. PAYMENT -->
@@ -337,7 +416,7 @@ function buildAgreement(t) {
 
   return `
     <h3>1. Parties</h3>
-    <p>This Agreement is between <strong>Boostinger</strong> (Nick Vogen, DBA Boostinger, 42538 Sparks Ct., Temecula, CA 92592) ("Developer") and the Client identified at checkout.</p>
+    <p>This Agreement is between <strong>Boostinger</strong> (Nick Vogen, DBA Boostinger, 42538 Sparks Ct., Temecula, CA 92592) ("Developer") and the Client identified below.</p>
 
     <h3>2. Scope of Services</h3>
     <p>Developer agrees to design, develop, and deliver a custom website as described below. Any work outside this scope requires a written change order and may incur additional fees.</p>
@@ -391,7 +470,7 @@ function buildAgreement(t) {
 }
 
 /* ============================================================
-   TIER SELECTION LOGIC
+   STATE
    ============================================================ */
 let selectedTier = null;
 let hasSignature = false;
@@ -400,39 +479,90 @@ const canvas = document.getElementById('signature-pad');
 const ctx = canvas.getContext('2d');
 let drawing = false;
 
+const agreementText = document.getElementById('agreement-text');
+const agreementWrap = document.getElementById('agreement-wrap');
+const signatureBlock = document.getElementById('signature-block');
+const scrollHint = document.getElementById('scroll-hint');
+const nameInput = document.getElementById('client-name');
+const emailInput = document.getElementById('client-email');
+
+/* ============================================================
+   CANVAS RESIZE
+   ============================================================ */
 function resizeCanvas() {
   const rect = canvas.getBoundingClientRect();
+  let saved = null;
+  if (canvas.width > 0 && canvas.height > 0 && hasSignature) {
+    saved = canvas.toDataURL();
+  }
   canvas.width = rect.width;
   canvas.height = rect.height;
   ctx.lineWidth = 2.2;
   ctx.lineCap = 'round';
   ctx.lineJoin = 'round';
   ctx.strokeStyle = '#111';
+  if (saved) {
+    const img = new Image();
+    img.onload = () => ctx.drawImage(img, 0, 0);
+    img.src = saved;
+  }
 }
-resizeCanvas();
-window.addEventListener('resize', () => { resizeCanvas(); });
+window.addEventListener('resize', () => {
+  if (signatureBlock.style.display !== 'none') resizeCanvas();
+});
 
+/* ============================================================
+   TIER SELECTION
+   ============================================================ */
 document.querySelectorAll('.tier-btn').forEach(btn => {
   btn.addEventListener('click', () => {
     document.querySelectorAll('.tier-btn').forEach(b => b.classList.remove('selected'));
     btn.classList.add('selected');
     selectedTier = btn.dataset.tier;
 
-    // Build and show agreement
-    document.getElementById('agreement-body').innerHTML = buildAgreement(TIERS[selectedTier]);
+    agreementText.innerHTML = buildAgreement(TIERS[selectedTier]);
     document.getElementById('agreement-section').style.display = 'block';
     document.getElementById('pay-section').style.display = 'none';
     document.querySelectorAll('.stripe-wrap').forEach(el => el.classList.add('hidden'));
 
-    // Reset signature
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    // Reset scroll + signature gate + fields
+    agreementText.scrollTop = 0;
+    signatureBlock.style.display = 'none';
+    scrollHint.classList.remove('hidden');
+    agreementWrap.classList.remove('at-bottom');
     hasSignature = false;
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
     document.getElementById('sig-error').style.display = 'none';
 
-    // Scroll to agreement
+    setTimeout(() => {
+      if (agreementText.scrollHeight <= agreementText.clientHeight + 4) {
+        revealSignature();
+      } else {
+        resizeCanvas();
+      }
+    }, 50);
+
     document.getElementById('agreement-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
   });
 });
+
+/* ============================================================
+   SCROLL-TO-BOTTOM DETECTION
+   ============================================================ */
+function revealSignature() {
+  signatureBlock.style.display = 'block';
+  scrollHint.classList.add('hidden');
+  agreementWrap.classList.add('at-bottom');
+  setTimeout(resizeCanvas, 30);
+}
+
+function checkScrolledToBottom() {
+  const threshold = 16;
+  const atBottom = agreementText.scrollTop + agreementText.clientHeight >= agreementText.scrollHeight - threshold;
+  if (atBottom) revealSignature();
+}
+
+agreementText.addEventListener('scroll', checkScrolledToBottom);
 
 /* ============================================================
    SIGNATURE PAD
@@ -474,17 +604,55 @@ document.getElementById('clear-sig').addEventListener('click', () => {
 });
 
 /* ============================================================
+   VALIDATION HELPERS
+   ============================================================ */
+function isValidEmail(email) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim());
+}
+
+/* ============================================================
    CONFIRM → REVEAL STRIPE
    ============================================================ */
 document.getElementById('confirm-sig').addEventListener('click', () => {
-  if (!hasSignature) {
-    document.getElementById('sig-error').style.display = 'block';
+  const name = nameInput.value.trim();
+  const email = emailInput.value.trim();
+  const errorEl = document.getElementById('sig-error');
+
+  if (!name) {
+    errorEl.textContent = 'Please enter your full name.';
+    errorEl.style.display = 'block';
+    nameInput.focus();
     return;
   }
-  document.getElementById('sig-error').style.display = 'none';
+  if (!isValidEmail(email)) {
+    errorEl.textContent = 'Please enter a valid email address.';
+    errorEl.style.display = 'block';
+    emailInput.focus();
+    return;
+  }
+  if (!hasSignature) {
+    errorEl.textContent = 'Please draw your signature above.';
+    errorEl.style.display = 'block';
+    return;
+  }
+
+  errorEl.style.display = 'none';
+
+  // Pre-fill Stripe Buy Button with the client's name + email
+  const target = document.getElementById('stripe-' + selectedTier);
+  if (target) {
+    const btn = target.querySelector('stripe-buy-button');
+    if (btn) {
+      btn.setAttribute('customer-name', name);
+      btn.setAttribute('customer-email', email);
+    }
+  }
+
+  // Log the signer's info (visible in browser console for your records)
+  console.log('Signed:', { tier: selectedTier, name, email, timestamp: new Date().toISOString() });
+
   document.getElementById('pay-section').style.display = 'block';
   document.querySelectorAll('.stripe-wrap').forEach(el => el.classList.add('hidden'));
-  const target = document.getElementById('stripe-' + selectedTier);
   if (target) target.classList.remove('hidden');
   document.getElementById('pay-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
 });
