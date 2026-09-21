@@ -3,30 +3,21 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Boostinger — Turn Local Businesses Into Local Leaders</title>
+<title>Boostinger — Website Design & Development Service Agreement</title>
+<script src="https://js.stripe.com/v3/"></script>
+<script src="https://cdn.jsdelivr.net/npm/signature_pad@4.2.0/dist/signature_pad.umd.min.js"></script>
 <style>
-  * { box-sizing: border-box; margin: 0; padding: 0; }
+  * { box-sizing: border-box; }
   body {
+    margin: 0;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     background: #0b0b0d;
-    color: #e8e8e8;
-    line-height: 1.6;
-    font-size: 17px;
-    -webkit-font-smoothing: antialiased;
+    color: #f2f2f2;
+    line-height: 1.5;
+    padding: 16px;
+    max-width: 720px;
+    margin: 0 auto;
   }
-  .wrap { max-width: 760px; margin: 0 auto; padding: 0 18px 60px; }
-
-  /* ---------- HEADER BANNER ---------- */
-  header.banner {
-    width: 100%;
-    background: #0b0b0d;
-    border-bottom: 1px solid #1e1e22;
-    display: flex;
-    justify-content: center;
-  }
-  .hero-banner { display: block; width: 100%; max-width: 1000px; height: auto; }
-
-  /* ---------- NAV BAR ---------- */
   nav.main-nav {
     position: sticky;
     top: 0;
@@ -39,6 +30,7 @@
     justify-content: center;
     gap: 6px;
     padding: 10px 12px;
+    margin: -16px -16px 16px;
     overflow-x: auto;
     white-space: nowrap;
   }
@@ -53,10 +45,8 @@
     letter-spacing: 1px;
     text-transform: uppercase;
     border: 1px solid transparent;
-    transition: all 0.15s ease;
   }
   nav.main-nav a:active { opacity: 0.7; }
-  nav.main-nav a:hover,
   nav.main-nav a.active {
     color: #ff7a00;
     border-color: #2a2a30;
@@ -67,688 +57,550 @@
     color: #0b0b0d;
     border-color: transparent;
   }
-  nav.main-nav a.buy:hover,
-  nav.main-nav a.buy:active { opacity: 0.9; }
-
-  /* ---------- SECTIONS ---------- */
-  section { padding: 42px 0; border-bottom: 1px solid #1a1a1e; }
-  section:last-of-type { border-bottom: none; }
-
+  header { text-align: center; padding: 16px 0 8px; }
+  header h1 {
+    margin: 0;
+    font-size: 26px;
+    letter-spacing: 1px;
+    background: linear-gradient(90deg, #f5b942, #ff7a00);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  header p { color: #999; margin: 4px 0 0; font-size: 13px; }
   h2 {
     font-size: 16px;
-    letter-spacing: 3px;
-    text-transform: uppercase;
+    margin: 28px 0 10px;
     color: #ff7a00;
-    margin-bottom: 20px;
-    text-align: center;
-    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1px;
   }
-
-  .hook {
-    font-size: 24px;
-    font-weight: 700;
-    color: #fff;
-    text-align: center;
-    line-height: 1.45;
-  }
-  .hook strong { color: #ff7a00; }
-
-  .sub {
-    text-align: center;
-    color: #b8b8b8;
-    font-size: 17px;
-    margin-top: 14px;
-  }
-  .sub strong { color: #f5b942; }
-
-  /* ---------- BIG STATS ---------- */
-  .stats {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 12px;
-    margin-top: 24px;
-  }
-  .stat {
-    background: linear-gradient(180deg, #1c1610 0%, #121216 100%);
-    border: 1px solid #2a2a30;
-    border-radius: 14px;
-    padding: 20px 10px;
-    text-align: center;
-  }
-  .stat .num {
-    font-size: 30px;
-    font-weight: 900;
-    background: linear-gradient(90deg, #f5b942, #ff7a00);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-    line-height: 1;
-    margin-bottom: 8px;
-  }
-  .stat .lbl { font-size: 13px; color: #c8c8c8; line-height: 1.35; }
-
-  /* ---------- INVISIBLE / LOSS LIST ---------- */
-  .loss-list { list-style: none; padding: 0; margin: 20px 0 0; }
-  .loss-list li {
-    padding: 12px 0 12px 34px;
-    position: relative;
-    color: #d0d0d0;
-    font-size: 16px;
-    border-bottom: 1px solid #1a1a1e;
-  }
-  .loss-list li:last-child { border-bottom: none; }
-  .loss-list li::before {
-    content: "✕";
-    color: #ff5a5a;
-    font-weight: 900;
-    position: absolute;
-    left: 0;
-    top: 12px;
-    font-size: 17px;
-  }
-
-  .callout {
-    margin-top: 24px;
-    padding: 18px;
-    border-left: 4px solid #ff7a00;
-    background: #121216;
+  label { display: block; font-size: 14px; margin-bottom: 4px; color: #ccc; }
+  input[type="text"], input[type="email"], input[type="tel"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 12px;
     border-radius: 8px;
-    font-size: 16px;
-    color: #e0e0e0;
-    font-weight: 600;
-    text-align: center;
+    border: 1px solid #333;
+    background: #151518;
+    color: #fff;
+    font-size: 15px;
   }
-
-  /* ---------- ROI HERO ---------- */
-  .roi-hero {
-    text-align: center;
-    padding: 32px 20px;
-    background: linear-gradient(180deg, #1c1610 0%, #121216 100%);
-    border: 1px solid #2a2a30;
-    border-radius: 16px;
-    margin-bottom: 24px;
+  input[type="text"]:focus, input[type="email"]:focus, input[type="tel"]:focus {
+    outline: none;
+    border-color: #ff7a00;
   }
-  .roi-hero .label {
-    color: #f5b942;
+  .tier-row, .boost-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px;
+    margin-bottom: 8px;
+    border: 1px solid #333;
+    border-radius: 10px;
+    background: #151518;
+    cursor: pointer;
+  }
+  .tier-row input, .boost-row input { accent-color: #ff7a00; width: 18px; height: 18px; }
+  .tier-row.selected, .boost-row.selected { border-color: #ff7a00; background: #1c1610; }
+  .tier-name { font-weight: 600; }
+  .tier-desc { font-size: 12px; color: #999; }
+  .agreement {
+    max-height: 340px;
+    overflow-y: auto;
+    padding: 16px;
+    border: 1px solid #333;
+    border-radius: 10px;
+    background: #111114;
     font-size: 13px;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    font-weight: 800;
-    margin-bottom: 10px;
+    color: #ccc;
   }
-  .roi-hero .big {
-    font-size: 52px;
-    font-weight: 900;
-    background: linear-gradient(90deg, #f5b942, #ff7a00);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-    line-height: 1;
-  }
-  .roi-hero .note { color: #b8b8b8; font-size: 15px; margin-top: 14px; }
-
-  /* ---------- WHY ROI ---------- */
-  .why-list { list-style: none; padding: 0; margin: 0; }
-  .why-list li {
-    padding: 10px 0 10px 30px;
-    position: relative;
-    color: #d0d0d0;
-    font-size: 15.5px;
-  }
-  .why-list li::before {
-    content: "●";
-    color: #ff7a00;
-    position: absolute;
-    left: 0;
-    font-size: 11px;
-    top: 15px;
-  }
-  .why-list strong { color: #f5b942; }
-
-  /* ---------- TRADE TABLE ---------- */
-  table.trades {
+  .agreement h3 { color: #f5b942; font-size: 14px; margin: 18px 0 6px; }
+  .agreement h3:first-child { margin-top: 0; }
+  .agreement p { margin: 6px 0; }
+  .agreement ul { margin: 6px 0 6px 18px; padding: 0; }
+  .agreement li { margin: 3px 0; }
+  .exhibit {
     width: 100%;
     border-collapse: collapse;
-    font-size: 15px;
-    border-radius: 12px;
-    overflow: hidden;
-    margin-top: 20px;
-  }
-  table.trades thead th {
-    background: #1c1610;
-    color: #f5b942;
-    padding: 12px 10px;
-    text-align: left;
+    margin-top: 10px;
     font-size: 12px;
-    letter-spacing: 0.5px;
-    text-transform: uppercase;
-    border-bottom: 1px solid #2a2a30;
-    font-weight: 700;
   }
-  table.trades td {
-    padding: 14px 10px;
-    border-bottom: 1px solid #1e1e22;
-    color: #e0e0e0;
-    vertical-align: top;
+  .exhibit td {
+    border: 1px solid #333;
+    padding: 6px 8px;
   }
-  table.trades tr:last-child td { border-bottom: none; }
-  table.trades tbody tr { background: #121216; }
-  table.trades td:first-child { color: #fff; font-weight: 700; }
-  table.trades td.roi { color: #4ade80; font-weight: 700; }
-
-  /* ---------- BOOSTEDSEO GRID ---------- */
-  .boost-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 14px;
-    margin-top: 20px;
-  }
-  .boost-card {
-    background: #121216;
-    border: 1px solid #2a2a30;
-    border-radius: 12px;
-    padding: 18px;
-  }
-  .boost-card h4 { color: #ff7a00; font-size: 15px; margin-bottom: 6px; letter-spacing: 0.5px; }
-  .boost-card p { color: #c8c8c8; font-size: 14px; line-height: 1.5; }
-
-  /* ---------- TIER CARDS ---------- */
-  .tiers { display: flex; flex-direction: column; gap: 18px; }
-  .tier {
-    border: 1px solid #2a2a30;
-    border-radius: 16px;
-    padding: 26px 22px;
-    background: #121216;
+  .exhibit td:first-child { color: #999; width: 45%; }
+  .exhibit td:last-child { color: #fff; font-weight: 600; }
+  .sig-wrap {
     position: relative;
+    background: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-top: 8px;
   }
-  .tier.popular {
-    border: 2px solid #ff7a00;
-    background: linear-gradient(180deg, #1c1610 0%, #121216 100%);
-    box-shadow: 0 0 40px rgba(255,122,0,0.2);
+  #signature-pad {
+    width: 100%;
+    height: 180px;
+    display: block;
+    touch-action: none;
   }
-  .tier .badge {
+  .sig-hint {
     position: absolute;
-    top: -12px;
+    top: 50%;
     left: 50%;
-    transform: translateX(-50%);
-    background: linear-gradient(90deg, #f5b942, #ff7a00);
-    color: #0b0b0d;
-    font-size: 11px;
-    font-weight: 800;
-    letter-spacing: 1.5px;
-    padding: 5px 14px;
-    border-radius: 20px;
-    white-space: nowrap;
+    transform: translate(-50%, -50%);
+    color: #bbb;
+    font-size: 14px;
+    pointer-events: none;
   }
-  .tier h3 {
-    font-size: 26px;
-    letter-spacing: 3px;
-    text-align: center;
-    margin-bottom: 6px;
-    font-weight: 800;
+  .sig-actions {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 6px;
   }
-  .tier.popular h3 { color: #ff7a00; }
-  .tier .price { font-size: 28px; font-weight: 800; text-align: center; color: #fff; }
-  .tier .price-note { text-align: center; color: #999; font-size: 14px; margin-bottom: 18px; }
-  .tier ul { list-style: none; padding: 0; margin: 0; }
-  .tier li {
-    font-size: 16px;
-    color: #d0d0d0;
-    padding: 8px 0 8px 26px;
-    position: relative;
+  .sig-actions button {
+    background: none;
+    border: 1px solid #444;
+    color: #aaa;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 12px;
+    cursor: pointer;
   }
-  .tier li::before {
-    content: "●";
-    color: #ff7a00;
-    position: absolute;
-    left: 0;
-    font-size: 11px;
-    top: 13px;
+  .consent {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    margin-top: 16px;
+    font-size: 13px;
+    color: #bbb;
   }
-  .tier-btn {
+  .consent input { margin-top: 3px; accent-color: #ff7a00; width: 18px; height: 18px; }
+  .total-bar {
+    position: sticky;
+    bottom: 0;
+    background: linear-gradient(90deg, #1c1610, #0b0b0d);
+    border-top: 1px solid #ff7a00;
+    padding: 12px 16px;
+    margin: 24px -16px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 15px;
+  }
+  .total-bar .amt { font-size: 22px; font-weight: 700; color: #ff7a00; }
+  .pay-btn {
     display: block;
     width: 100%;
-    margin-top: 20px;
-    padding: 14px;
+    padding: 16px;
+    margin-top: 16px;
+    border: none;
     border-radius: 10px;
-    background: transparent;
-    border: 2px solid #ff7a00;
-    color: #ff7a00;
-    font-size: 15px;
-    font-weight: 800;
-    letter-spacing: 1px;
-    text-align: center;
-    text-decoration: none;
-  }
-  .tier-btn:active { opacity: 0.7; }
-  .tier.popular .tier-btn {
     background: linear-gradient(90deg, #f5b942, #ff7a00);
     color: #0b0b0d;
-    border-color: transparent;
-  }
-
-  .payment-note {
-    text-align: center;
-    font-size: 15px;
-    color: #aaa;
-    margin-top: 22px;
-    padding: 14px;
-    border: 1px solid #2a2a30;
-    border-radius: 10px;
-    background: #121216;
-    line-height: 1.7;
-  }
-
-  /* ---------- SEO BUNDLE TABLE ---------- */
-  .seo-intro {
-    text-align: center;
-    color: #d0d0d0;
-    font-size: 16px;
-    margin-bottom: 24px;
-    line-height: 1.6;
-  }
-  .seo-intro strong { color: #f5b942; }
-  table.seo {
-    width: 100%;
-    border-collapse: collapse;
-    font-size: 15px;
-    border-radius: 12px;
-    overflow: hidden;
-  }
-  table.seo thead th {
-    background: #1c1610;
-    color: #f5b942;
-    padding: 12px 10px;
-    text-align: left;
-    font-size: 12px;
-    letter-spacing: 0.5px;
-    text-transform: uppercase;
-    border-bottom: 1px solid #2a2a30;
-    font-weight: 700;
-  }
-  table.seo td {
-    padding: 14px 10px;
-    border-bottom: 1px solid #1e1e22;
-    color: #e0e0e0;
-    vertical-align: top;
-  }
-  table.seo tr:last-child td { border-bottom: none; }
-  table.seo td:first-child { color: #fff; font-weight: 700; }
-  table.seo td.save { color: #4ade80; font-weight: 700; font-size: 14px; }
-  table.seo tbody tr { background: #121216; }
-
-  .disclaimer {
-    font-size: 13px;
-    color: #777;
-    text-align: center;
-    margin-top: 14px;
-    font-style: italic;
-  }
-
-  /* ---------- INCLUDED ---------- */
-  .included {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 14px 24px;
-    margin-top: 8px;
-  }
-  .included div {
-    font-size: 15.5px;
-    color: #d0d0d0;
-    padding-left: 26px;
-    position: relative;
-  }
-  .included div::before {
-    content: "✓";
-    color: #ff7a00;
-    font-weight: 800;
-    position: absolute;
-    left: 0;
     font-size: 17px;
-  }
-
-  /* ---------- BOTTOM LINE ---------- */
-  .bottom-line {
-    background: linear-gradient(180deg, #121216 0%, #1c1610 100%);
-    border: 1px solid #2a2a30;
-    border-radius: 16px;
-    padding: 28px 22px;
-    margin-top: 8px;
-  }
-  .bottom-line h3 {
-    color: #f5b942;
-    font-size: 18px;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    text-align: center;
-    margin-bottom: 18px;
-  }
-  .bottom-line ul { list-style: none; padding: 0; margin: 0; }
-  .bottom-line li {
-    padding: 9px 0 9px 30px;
-    position: relative;
-    color: #e0e0e0;
-    font-size: 16px;
-  }
-  .bottom-line li::before {
-    content: "★";
-    color: #ff7a00;
-    position: absolute;
-    left: 0;
-    font-size: 15px;
-    top: 10px;
-  }
-
-  /* ---------- CTA ---------- */
-  .cta {
-    text-align: center;
-    padding: 44px 22px;
-    background: linear-gradient(180deg, #0b0b0d 0%, #1c1610 100%);
-    border-radius: 18px;
-    margin-top: 32px;
-    border: 1px solid #2a2a30;
-  }
-  .cta h2 { color: #f5b942; font-size: 22px; letter-spacing: 3px; }
-  .cta p { color: #c8c8c8; font-size: 16px; margin: 12px 0 26px; }
-  .btn {
-    display: inline-block;
-    padding: 18px 38px;
-    border-radius: 12px;
-    background: linear-gradient(90deg, #f5b942, #ff7a00);
-    color: #0b0b0d;
-    font-size: 18px;
-    font-weight: 800;
+    font-weight: 700;
     letter-spacing: 0.5px;
-    text-decoration: none;
+    cursor: pointer;
   }
-  .btn:active { opacity: 0.85; }
-
-  footer {
-    text-align: center;
-    padding: 36px 16px 44px;
-    color: #777;
-    font-size: 14px;
-    border-top: 1px solid #1a1a1e;
-    line-height: 1.8;
-  }
-  footer .contact { color: #ff7a00; font-weight: 700; font-size: 15px; margin-bottom: 10px; }
-  footer .tagline { color: #f5b942; font-weight: 600; font-style: italic; margin-bottom: 10px; }
-
-  @media (max-width: 500px) {
-    .included { grid-template-columns: 1fr; }
-    .boost-grid { grid-template-columns: 1fr; }
-    .stat .num { font-size: 24px; }
-    .stat .lbl { font-size: 12px; }
-    .roi-hero .big { font-size: 40px; }
-    nav.main-nav a { padding: 8px 14px; font-size: 12px; }
-  }
+  .pay-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+  #step-pay { display: none; }
+  #checkout { margin-top: 20px; }
+  .success { text-align: center; padding: 60px 20px; }
+  .success h1 { color: #ff7a00; }
+  .fine { font-size: 11px; color: #666; margin-top: 20px; text-align: center; }
 </style>
 </head>
 <body>
 
-<header class="banner">
-  <img class="hero-banner" src="/banner.png" alt="Boostinger">
-</header>
-
 <nav class="main-nav">
-  <a href="/" class="active">Home</a>
-  <a href="/blog">Blog</a>
+  <a href="/">Home</a>
+  <a href="/blog.html">Blog</a>
   <a href="/Pay" class="buy">Buy Now</a>
 </nav>
 
-<div class="wrap">
+<div id="step-success" class="success" style="display:none;">
+  <h1>Payment Received</h1>
+  <p>Thank you. Your signed agreement and receipt are on the way to your inbox.</p>
+  <p class="fine">Boostinger · getboostinger@gmail.com</p>
+</div>
 
-  <section>
-    <h2>Why Local Trade Businesses Need a Website</h2>
-    <p class="hook">
-      Local customers search online <strong>before they call</strong>.<br>
-      Without a website, <strong>you are invisible</strong>.
-    </p>
+<div id="step-form">
 
-    <div class="stats">
-      <div class="stat">
-        <div class="num">98%</div>
-        <div class="lbl">of customers search online first</div>
-      </div>
-      <div class="stat">
-        <div class="num">46%</div>
-        <div class="lbl">of Google searches have local intent</div>
-      </div>
-      <div class="stat">
-        <div class="num">5–10×</div>
-        <div class="lbl">typical ROI with website + SEO</div>
-      </div>
-    </div>
+  <header>
+    <h1>BOOSTINGER</h1>
+    <p>Website Design &amp; Development Service Agreement</p>
+  </header>
 
-    <p class="sub" style="margin-top:26px;">
-      Stop losing jobs to competitors who show up online.<br>
-      A professional Boostinger website + BoostedSEO turns visibility into revenue.
-    </p>
-  </section>
+  <h2>1 · Your Information</h2>
+  <label for="businessName">Business Name</label>
+  <input type="text" id="businessName" placeholder="Acme LLC">
+  <label for="clientName">Contact Name</label>
+  <input type="text" id="clientName" placeholder="Jane Doe">
+  <label for="clientEmail">Email</label>
+  <input type="email" id="clientEmail" placeholder="jane@acme.com">
+  <label for="clientPhone">Phone</label>
+  <input type="tel" id="clientPhone" placeholder="(555) 123-4567">
+  <label for="clientAddress">Address</label>
+  <input type="text" id="clientAddress" placeholder="123 Main St, City, State ZIP">
 
-  <section>
-    <h2>Without a Website, You Are Invisible</h2>
-    <p class="sub">
-      Local customers rely on online search to choose who they trust.
-      When a business has no website, it becomes invisible to the people
-      actively looking for services right now — plumbers, auto mechanics,
-      landscapers, electricians, machinists, restaurants, and every other local trade.
-    </p>
+  <h2>2 · Choose Your Package</h2>
 
-    <ul class="loss-list">
-      <li>Visibility to <strong>98% of customers</strong> who search online before choosing a local service</li>
-      <li>Access to <strong>46% of all Google searches</strong> that have local intent</li>
-      <li>Trust, credibility, and the professional appearance customers expect</li>
-      <li>Revenue — calls, bookings, and quote requests that go to competitors instead</li>
-      <li>Competitive advantage against nearby businesses that <em>do</em> show up</li>
+  <label class="tier-row" data-tier="basic">
+    <input type="radio" name="tier" value="basic" checked>
+    <span>
+      <span class="tier-name">Basic</span>
+      <span class="tier-desc">Single-page or simple brochure site, template design, basic contact form.</span>
+    </span>
+  </label>
+
+  <label class="tier-row" data-tier="standard">
+    <input type="radio" name="tier" value="standard">
+    <span>
+      <span class="tier-name">Standard</span>
+      <span class="tier-desc">Multi-page custom site, lead forms, basic integrations (booking, maps, social).</span>
+    </span>
+  </label>
+
+  <label class="tier-row" data-tier="premium">
+    <input type="radio" name="tier" value="premium">
+    <span>
+      <span class="tier-name">Premium</span>
+      <span class="tier-desc">Advanced functionality, e-commerce, complex integrations, bespoke design.</span>
+    </span>
+  </label>
+
+  <label class="boost-row" id="boostRow">
+    <input type="checkbox" id="boost">
+    <span>
+      <span class="tier-name">Add BoostedSEO</span>
+      <span class="tier-desc">Daily AI-written articles, backlinks, monthly ranking reports. Bundled discount applied.</span>
+    </span>
+  </label>
+
+  <h2>3 · Service Agreement</h2>
+  <div class="agreement">
+
+    <h3>1. Effective Date &amp; Parties</h3>
+    <p>This Website Design &amp; Development Service Agreement ("Agreement") is made and entered into as of the date of signature below.</p>
+    <p><strong>Developer:</strong> Nick Vogen DBA Boostinger · 42538 Sparks Ct. Temecula, CA 92592 · getboostinger@gmail.com · (951) 428-1407</p>
+    <p><strong>Client:</strong> <span id="exClient">—</span></p>
+
+    <h3>2. Scope of Services</h3>
+    <p>Developer agrees to design, develop, and deliver a custom website for Client as described in Exhibit A. Any work outside the scope defined in Exhibit A — including additional pages, custom features, or e-commerce functionality not originally agreed upon — requires a written change order and may incur additional fees.</p>
+
+    <h3>3. Project Fee &amp; Payment Terms</h3>
+    <ul>
+      <li>Total Project Fee is stated in Exhibit A.</li>
+      <li>50% deposit is due at signing before work begins.</li>
+      <li>Remaining 50% balance is due upon completion and prior to site launch.</li>
+      <li>Accepted payment methods: Cash, Card (Stripe), Check, Wire.</li>
+      <li>Once work has commenced, the deposit is non-refundable except as described in Section 11.</li>
     </ul>
 
-    <div class="callout">
-      A missing website doesn't just hurt — it blocks revenue.<br>
-      Every day without online presence is another day of lost jobs.
-    </div>
-  </section>
+    <h3>4. Ongoing Maintenance, Hosting &amp; Security</h3>
+    <p>Following launch, Client agrees to a recurring monthly fee (specified in Exhibit A) covering website hosting, routine security updates and monitoring, minor content updates (under 15 minutes), uptime monitoring, and backups.</p>
+    <p>This monthly fee is separate from the Project Fee and any BoostedSEO fee. Client may cancel the maintenance plan with 30 days' written notice. After cancellation, Developer is not obligated to continue hosting or updating the site. Client is responsible for arranging migration.</p>
+    <p><strong>Migration Fee:</strong> If Client requests assistance migrating to a new host, a fee of $300 applies.</p>
 
-  <section>
-    <h2>The ROI of Going Online</h2>
+    <h3>5. BoostedSEO Monthly Service</h3>
+    <p>Client may elect to add Boostinger's BoostedSEO monthly service, which includes on-page SEO optimization, AI-driven competitor research, daily published articles (average 1,500–2,500 words), monthly backlinks and mentions, and monthly performance reports.</p>
+    <p><em>Disclaimer: SEO results vary based on search engine algorithms, competition, and market conditions. Developer does not guarantee specific rankings, traffic, or business outcomes.</em></p>
 
-    <div class="roi-hero">
-      <div class="label">Typical ROI Range</div>
-      <div class="big">500% – 1000%+</div>
-      <div class="note">Local service businesses commonly see 5× to 10× return once ranking begins.</div>
-    </div>
+    <h3>6. Delivery Timeline</h3>
+    <p>Developer will deliver the completed website within 7 business days for Basic and Standard Tier projects, or 14 business days for Premium Tier projects. The timeline begins only after: (1) full execution of this Agreement, (2) receipt of the deposit, and (3) receipt of all required Client content and assets.</p>
+    <p><strong>Client Delays:</strong> Delays caused by Client's failure to provide timely content, feedback, or approvals will extend the delivery date proportionally. If Client is inactive for 14 days, the project is paused. If inactive for 30 days, Developer may close the project and a restart fee may apply.</p>
 
-    <h2 style="font-size:14px;margin-top:24px;">Why the ROI Is So High</h2>
-    <ul class="why-list">
-      <li>Local SEO delivers <strong>3× – 5× ROI</strong> in the first year alone</li>
-      <li>Organic leads close at <strong>15% – 20%</strong> — far higher than outbound marketing</li>
-      <li>Google Business Profile optimization increases customer actions by <strong>89%</strong></li>
-      <li>Organic SEO leads cost <strong>$0 – $100</strong> vs. <strong>$90 – $167</strong> for paid ads</li>
-      <li>Customers searching <strong>"near me"</strong> convert at extremely high rates</li>
+    <h3>7. Client Responsibilities</h3>
+    <p>Client agrees to provide all necessary content (text, images, logos, branding materials), feedback, and approvals in a timely manner. Client warrants that all materials provided are owned by Client or properly licensed. Developer is not liable for copyright issues arising from Client-provided materials.</p>
+
+    <h3>7A. Indemnification</h3>
+    <p>Client shall indemnify, defend, and hold harmless Developer from third-party claims arising out of Client's use of the website, Client's breach of this Agreement, or materials provided by Client. Developer shall indemnify Client against third-party claims that custom code or design elements created by Developer infringe a third party's intellectual property rights, excluding claims arising from Client-supplied materials or Client modifications.</p>
+
+    <h3>8. Revisions</h3>
+    <p>The Project Fee includes two (2) rounds of revisions. Both rounds must be requested and the corresponding Client feedback provided within thirty (30) calendar days following delivery of the initial draft. Additional revisions or substantial scope changes will be billed at $65/hour or handled via a written change order.</p>
+
+    <h3>8.1 Acceptance</h3>
+    <p>Upon delivery of the initial draft or any subsequent revision, Client shall have five (5) business days to review the deliverable and provide written notice of acceptance or of any material non-conformity. If Client fails to provide written notice within the five (5) business day review period, the deliverable shall be deemed accepted.</p>
+
+    <h3>9. Ownership &amp; Intellectual Property</h3>
+    <p>Client owns all website content, branding, and domain. Developer retains ownership of proprietary tools, templates, and platform technology used to build or host the site. Developer may showcase the completed project in its portfolio unless Client opts out in writing. Client opt-out fee is $100.</p>
+
+    <h3>10. Third-Party Costs &amp; Third-Party Failures</h3>
+    <p>Costs for domain registration, plugins, licenses, premium stock imagery, or other third-party services are not included unless stated in Exhibit A. Developer is not responsible for outages, failures, or issues caused by third-party providers, hosting companies, plugins, APIs, or external services.</p>
+
+    <h3>11. Cancellation &amp; Termination</h3>
+    <ul>
+      <li>Either Party may terminate this Agreement in writing prior to project completion.</li>
+      <li>If Client cancels after work has begun, the deposit is non-refundable. Client will be billed for any additional work completed beyond the deposit amount.</li>
+      <li>If Developer terminates without cause after receiving the deposit, any unearned portion will be refunded.</li>
     </ul>
 
-    <h2 style="font-size:14px;margin-top:32px;">ROI by Trade Category</h2>
-    <table class="trades">
-      <thead>
-        <tr><th>Trade</th><th>Typical ROI</th><th>Why It Works</th></tr>
-      </thead>
-      <tbody>
-        <tr><td>Plumbers</td><td class="roi">500–900%</td><td>Emergency jobs + high search demand</td></tr>
-        <tr><td>Auto Mechanics</td><td class="roi">400–800%</td><td>Recurring maintenance + trust factor</td></tr>
-        <tr><td>Landscapers</td><td class="roi">300–700%</td><td>Monthly contracts + seasonal demand</td></tr>
-        <tr><td>Electricians</td><td class="roi">500–1000%</td><td>High-ticket urgent repairs</td></tr>
-        <tr><td>Machinists / Fabricators</td><td class="roi">600–1200%</td><td>B2B contracts + specialized services</td></tr>
-        <tr><td>Restaurants</td><td class="roi">200–500%</td><td>High volume + strong local search</td></tr>
-      </tbody>
+    <h3>12. Late Payment</h3>
+    <p>Invoices unpaid after 7 days from delivery of completed website are subject to a 5% late fee. Developer may withhold final files, hosting access, or site transfer until the balance is paid. If Client is unresponsive after 60 days, the project will assume forfeiture and the domain will be disconnected from hosting services.</p>
+
+    <h3>13. Warranty &amp; Post-Launch Support</h3>
+    <p>Developer warrants that the website will function substantially as described in Exhibit A and on current major browsers as of the delivery date. A 14-day warranty period applies for bug fixes. Bugs caused by Client edits or third-party changes are not covered. Except as stated, the website is provided "as is." Developer makes no guarantees regarding search rankings, sales, leads, or business results.</p>
+
+    <h3>14. Limitation of Liability</h3>
+    <p>Developer's total liability under this Agreement shall not exceed the total amount paid by Client. Developer is not liable for indirect, incidental, or consequential damages, including lost profits or lost data.</p>
+
+    <h3>15. Confidentiality</h3>
+    <p>Both Parties agree to keep confidential any proprietary or sensitive business information shared during this engagement.</p>
+
+    <h3>16. Independent Contractor</h3>
+    <p>Developer is an independent contractor. Nothing in this Agreement creates an employment, partnership, agency, or joint venture relationship.</p>
+
+    <h3>17. Governing Law &amp; Dispute Resolution</h3>
+    <p>This Agreement is governed by the laws of the State of California. Before litigation, Parties agree to attempt resolution through mediation. Venue for disputes shall be in Riverside County, California.</p>
+
+    <h3>18. Entire Agreement</h3>
+    <p>This Agreement, including Exhibit A and any signed change orders, constitutes the entire agreement between the Parties. Amendments must be made in writing and signed by both Parties.</p>
+
+    <h3>19. Force Majeure</h3>
+    <p>Neither Party shall be liable for delay or failure to perform obligations (other than payment obligations) due to causes beyond its reasonable control, including natural disasters, internet or utility outages, acts of government, labor disputes, or failures of third-party providers. If such an event continues for more than 30 days, either Party may terminate this Agreement upon written notice, with Section 11 governing the resulting deposit/payment treatment.</p>
+
+    <h3>20. Assignment</h3>
+    <p>Neither Party may assign this Agreement without the prior written consent of the other Party, except that Developer may assign this Agreement to an affiliate or in connection with a merger, acquisition, or sale of all or substantially all of its assets without Client's consent. Developer may also subcontract portions of the work to third parties without Client's consent, provided Developer remains responsible for their performance.</p>
+
+    <h3>EXHIBIT A — Project Scope &amp; Specifications</h3>
+    <table class="exhibit">
+      <tr><td>Client / Business Name</td><td id="exBiz">—</td></tr>
+      <tr><td>Complexity Tier Selected</td><td id="exTier">Basic</td></tr>
+      <tr><td>BoostedSEO Add-On</td><td id="exBoost">No</td></tr>
+      <tr><td>Monthly Maintenance Plan</td><td id="exMonthly">$75 / month</td></tr>
+      <tr><td>Total Project Fee</td><td id="exFee">$1,100</td></tr>
+      <tr><td>Deposit Due at Signing (50%)</td><td id="exDeposit">$500</td></tr>
+      <tr><td>Balance Due at Delivery (50%)</td><td id="exBalance">$600</td></tr>
+      <tr><td>Total Due Today</td><td id="exTotal">$575</td></tr>
+      <tr><td>Target Delivery Date</td><td>7 business days from signing</td></tr>
+      <tr><td>Effective Date</td><td id="exDate">—</td></tr>
     </table>
-    <p class="disclaimer">These ROI ranges reflect real-world performance across local service industries.</p>
-  </section>
-
-  <section>
-    <h2>How BoostedSEO Amplifies Growth</h2>
-    <p class="seo-intro">
-      BoostedSEO is designed specifically for local trade workers who need
-      consistent visibility and steady customer flow.
+    <p style="font-size:11px;color:#888;margin-top:10px;">
+      <strong>FIRST CLIENT FOUNDER'S PROMOTION (One-Time Offer):</strong>
+      Project Fee discounts reflected above. If BoostedSEO Add-On is selected, the bundled monthly rate is discounted for the first 6 months, after which it reverts to the standard bundled rate. This offer is exclusive to this Client and this Agreement only. Developer reserves the right to withdraw this offer if the project is paused or canceled.
     </p>
 
-    <div class="boost-grid">
-      <div class="boost-card">
-        <h4>Higher Rankings</h4>
-        <p>Climb local search results and appear when customers need you.</p>
-      </div>
-      <div class="boost-card">
-        <h4>Stronger Reputation</h4>
-        <p>Accelerate review velocity and build lasting trust.</p>
-      </div>
-      <div class="boost-card">
-        <h4>Compounding Growth</h4>
-        <p>SEO gains build month after month — not a one-time spike.</p>
-      </div>
-      <div class="boost-card">
-        <h4>More Calls &amp; Bookings</h4>
-        <p>Turn search visibility into real quote requests and jobs.</p>
-      </div>
-      <div class="boost-card">
-        <h4>Lower Cost Per Lead</h4>
-        <p>Organic leads cost a fraction of paid advertising.</p>
-      </div>
-      <div class="boost-card">
-        <h4>Credible Presence</h4>
-        <p>A professional site makes you look as good as you perform.</p>
-      </div>
-    </div>
-  </section>
+    <h3>21. Signatures</h3>
+    <p>IN WITNESS WHEREOF, the Parties have executed this Agreement as of the Effective Date first written above. By signing below, Client agrees to all terms above and consents to electronic signature.</p>
 
-  <section>
-    <h2>We Offer 3 Package Tiers</h2>
-    <p class="sub" style="margin-bottom:26px;">
-      Businesses with professional websites earn <strong>39% more revenue</strong>.
-      Professional sites convert at 3–5% vs 1–2% for DIY/template — up to <strong>2.5× more leads</strong>.
-    </p>
-
-    <div class="tiers">
-      <div class="tier">
-        <h3>BASIC</h3>
-        <div class="price">$750 + $750</div>
-        <div class="price-note">Startup deposit + due at launch</div>
-        <ul>
-          <li>Single or simple multi-page site</li>
-          <li>Template-based professional design</li>
-          <li>Basic contact form</li>
-          <li>Mobile-responsive</li>
-          <li>7 business day delivery</li>
-        </ul>
-        <a class="tier-btn" href="/Pay?tier=basic">START WITH BASIC →</a>
-      </div>
-
-      <div class="tier popular">
-        <div class="badge">★ MOST POPULAR</div>
-        <h3>STANDARD</h3>
-        <div class="price">$1,499 + $1,499</div>
-        <div class="price-note">Startup deposit + due at launch</div>
-        <ul>
-          <li>Multi-page custom design</li>
-          <li>Contact / lead capture forms</li>
-          <li>Integrations (maps, social, booking)</li>
-          <li>Mobile-responsive &amp; SEO-ready</li>
-          <li>7 business day delivery</li>
-        </ul>
-        <a class="tier-btn" href="/Pay?tier=standard">START WITH STANDARD →</a>
-      </div>
-
-      <div class="tier">
-        <h3>PREMIUM</h3>
-        <div class="price">$2,499 + $2,499</div>
-        <div class="price-note">Startup deposit + due at launch</div>
-        <ul>
-          <li>Advanced custom functionality</li>
-          <li>E-commerce or complex integrations</li>
-          <li>Bespoke design + API / embeds</li>
-          <li>Priority support during build</li>
-          <li>14 business day delivery</li>
-        </ul>
-        <a class="tier-btn" href="/Pay?tier=premium">START WITH PREMIUM →</a>
-      </div>
-    </div>
-
-    <div class="payment-note">
-      50% deposit at signing · 50% due before launch<br>
-      Cash · Card (Stripe) · Check · Wire
-    </div>
-  </section>
-
-  <section>
-    <h2>Upgrade with BoostedSEO — Grow Faster</h2>
-    <p class="seo-intro">
-      Every $1 spent on SEO returns <strong>$19.90 in revenue</strong> — nearly 5× higher than the
-      $4.40 return from paid ads. Organic leads also close at <strong>14.6%</strong> vs 1.7% for cold outreach.
-    </p>
-
-    <table class="seo">
-      <thead>
-        <tr><th>Plan</th><th>Base Maint.</th><th>With BoostedSEO</th><th>You Save</th></tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>Basic</td><td>$75 / mo</td><td>$300 / mo</td>
-          <td class="save">$25/mo<br>$300/yr</td>
-        </tr>
-        <tr>
-          <td>Standard</td><td>$150 / mo</td><td>$365 / mo</td>
-          <td class="save">$35/mo<br>$420/yr</td>
-        </tr>
-        <tr>
-          <td>Premium</td><td>$300 / mo</td><td>$500 / mo</td>
-          <td class="save">$50/mo<br>$600/yr</td>
-        </tr>
-      </tbody>
-    </table>
-
-    <p class="disclaimer">
-      Subject to competition &amp; market conditions. No specific rankings or outcomes guaranteed.
-    </p>
-  </section>
-
-  <section>
-    <h2>Every Monthly Plan Includes</h2>
-    <div class="included">
-      <div>Reliable website hosting</div>
-      <div>Minor content updates (under 15 min)</div>
-      <div>Routine security updates &amp; monitoring</div>
-      <div>Uptime monitoring &amp; regular backups</div>
-    </div>
-  </section>
-
-  <section>
-    <h2>The Bottom Line</h2>
-    <div class="bottom-line">
-      <h3>Trade workers without websites miss the majority of local customers</h3>
-      <ul>
-        <li>500% – 1000%+ ROI once ranking begins</li>
-        <li>Higher customer trust &amp; professionalism</li>
-        <li>More calls, bookings, and quote requests</li>
-        <li>Lower cost per lead than paid ads</li>
-        <li>Stronger long-term, compounding growth</li>
-      </ul>
-    </div>
-  </section>
-
-  <div class="cta">
-    <h2>READY TO STOP LOSING JOBS?</h2>
-    <p>Choose your tier, lock in your deposit, and we'll start building within days.</p>
-    <a class="btn" href="/Pay">Start Your Project →</a>
   </div>
+
+  <h2>4 · Sign Below</h2>
+  <div class="sig-wrap">
+    <canvas id="signature-pad"></canvas>
+    <div class="sig-hint" id="sigHint">Sign here with your finger</div>
+  </div>
+  <div class="sig-actions">
+    <button type="button" id="clearSig">Clear</button>
+  </div>
+
+  <label class="consent">
+    <input type="checkbox" id="consent">
+    <span>I have read and agree to the Service Agreement above, and I consent to sign electronically. I understand the deposit is due today and is non-refundable once work begins.</span>
+  </label>
+
+  <div class="total-bar">
+    <span>Due at signing</span>
+    <span class="amt">$<span id="amount">575</span></span>
+  </div>
+
+  <button class="pay-btn" id="submitBtn">Sign &amp; Continue to Payment</button>
+  <p class="fine">Payments are securely processed by Stripe.</p>
 
 </div>
 
-<footer>
-  <div class="contact">
-    (951) 428-1407 · getboostinger@gmail.com
-  </div>
-  <div class="tagline">"Turn local businesses into local leaders."</div>
-  Boostinger · Website Design &amp; Development · California<br>
-  Pricing subject to project scope (see Exhibit A)
-</footer>
+<div id="step-pay">
+  <header>
+    <h1>BOOSTINGER</h1>
+    <p>Secure Payment</p>
+  </header>
+  <div id="checkout"></div>
+</div>
 
+<script>
+const STRIPE_PUBLISHABLE_KEY = 'pk_test_REPLACE_ME';
+
+const PRICES = {
+  basic: {
+    label: 'Basic',
+    fee: 1100, balance: 600,
+    noBoost: { deposit: 500, monthly: 75,  total: 575  },
+    boost:   { deposit: 500, monthly: 200, monthlyAfter: 300, total: 700  }
+  },
+  standard: {
+    label: 'Standard',
+    fee: 2600, balance: 1300,
+    noBoost: { deposit: 1300, monthly: 150, total: 1450 },
+    boost:   { deposit: 1300, monthly: 265, monthlyAfter: 365, total: 1565 }
+  },
+  premium: {
+    label: 'Premium',
+    fee: 4600, balance: 2300,
+    noBoost: { deposit: 2300, monthly: 300, total: 2600 },
+    boost:   { deposit: 2300, monthly: 400, monthlyAfter: 500, total: 2700 }
+  }
+};
+
+const tierInputs   = document.querySelectorAll('input[name="tier"]');
+const boostBox     = document.getElementById('boost');
+const boostRow     = document.getElementById('boostRow');
+const amountEl     = document.getElementById('amount');
+const submitBtn    = document.getElementById('submitBtn');
+const consentBox   = document.getElementById('consent');
+
+const exBiz = document.getElementById('exBiz');
+const exTier = document.getElementById('exTier');
+const exBoost = document.getElementById('exBoost');
+const exMonthly = document.getElementById('exMonthly');
+const exFee = document.getElementById('exFee');
+const exDeposit = document.getElementById('exDeposit');
+const exBalance = document.getElementById('exBalance');
+const exTotal = document.getElementById('exTotal');
+const exClient = document.getElementById('exClient');
+const exDate = document.getElementById('exDate');
+
+const businessNameEl = document.getElementById('businessName');
+const clientNameEl   = document.getElementById('clientName');
+
+const params = new URLSearchParams(window.location.search);
+const presetTier = params.get('tier');
+if (presetTier && PRICES[presetTier]) {
+  tierInputs.forEach(input => {
+    input.checked = (input.value === presetTier);
+  });
+}
+
+const canvas = document.getElementById('signature-pad');
+const sigHint = document.getElementById('sigHint');
+const signaturePad = new SignaturePad(canvas, {
+  backgroundColor: 'rgba(255,255,255,0)',
+  penColor: '#111'
+});
+
+function resizeCanvas() {
+  const ratio = Math.max(window.devicePixelRatio || 1, 1);
+  canvas.width  = canvas.offsetWidth  * ratio;
+  canvas.height = canvas.offsetHeight * ratio;
+  canvas.getContext('2d').scale(ratio, ratio);
+  signaturePad.clear();
+}
+window.addEventListener('resize', resizeCanvas);
+resizeCanvas();
+
+signaturePad.addEventListener('beginStroke', () => { sigHint.style.display = 'none'; });
+
+document.getElementById('clearSig').addEventListener('click', () => {
+  signaturePad.clear();
+  sigHint.style.display = 'block';
+});
+
+function currentSelection() {
+  const tier = document.querySelector('input[name="tier"]:checked').value;
+  const boost = boostBox.checked;
+  const plan = PRICES[tier];
+  const pricing = boost ? plan.boost : plan.noBoost;
+  return { tier, boost, plan, pricing };
+}
+
+function updatePricing() {
+  const { tier, boost, plan, pricing } = currentSelection();
+
+  document.querySelectorAll('.tier-row').forEach(row => {
+    row.classList.toggle('selected', row.dataset.tier === tier);
+  });
+  boostRow.classList.toggle('selected', boost);
+
+  amountEl.textContent = pricing.total.toLocaleString();
+
+  exTier.textContent = plan.label;
+  exBoost.textContent = boost ? 'Yes' : 'No';
+  exMonthly.textContent = boost
+    ? `$${pricing.monthly}/month for first 6 months, then $${pricing.monthlyAfter}/month`
+    : `$${pricing.monthly}/month`;
+  exFee.textContent = '$' + plan.fee.toLocaleString();
+  exDeposit.textContent = '$' + pricing.deposit.toLocaleString();
+  exBalance.textContent = '$' + plan.balance.toLocaleString();
+  exTotal.textContent = '$' + pricing.total.toLocaleString();
+}
+
+tierInputs.forEach(el => el.addEventListener('change', updatePricing));
+boostBox.addEventListener('change', updatePricing);
+
+function updateClientInfo() {
+  const biz = businessNameEl.value.trim() || '—';
+  const name = clientNameEl.value.trim() || '—';
+  exBiz.textContent = biz;
+  exClient.textContent = biz + (name !== '—' ? ' · ' + name : '');
+}
+businessNameEl.addEventListener('input', updateClientInfo);
+clientNameEl.addEventListener('input', updateClientInfo);
+
+exDate.textContent = new Date().toLocaleDateString('en-US', {
+  year: 'numeric', month: 'long', day: 'numeric'
+});
+
+submitBtn.addEventListener('click', async () => {
+  const businessName = businessNameEl.value.trim();
+  const clientName   = clientNameEl.value.trim();
+  const clientEmail  = document.getElementById('clientEmail').value.trim();
+  const clientPhone  = document.getElementById('clientPhone').value.trim();
+  const clientAddress = document.getElementById('clientAddress').value.trim();
+
+  if (!businessName)   return alert('Please enter your business name.');
+  if (!clientName)     return alert('Please enter your contact name.');
+  if (!clientEmail || !clientEmail.includes('@')) return alert('Please enter a valid email.');
+  if (signaturePad.isEmpty()) return alert('Please sign in the signature box.');
+  if (!consentBox.checked)    return alert('Please check the consent box to continue.');
+
+  const { tier, boost, pricing } = currentSelection();
+  const signature = signaturePad.toDataURL('image/png');
+
+  submitBtn.disabled = true;
+  submitBtn.textContent = 'Preparing secure checkout…';
+
+  try {
+    const res = await fetch('/api/create-checkout-session', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        tier, boost, businessName, clientName,
+        clientEmail, clientPhone, clientAddress, signature
+      })
+    });
+
+    if (!res.ok) throw new Error('Server error ' + res.status);
+    const data = await res.json();
+    if (!data.clientSecret) throw new Error('No client secret returned');
+
+    document.getElementById('step-form').style.display = 'none';
+    document.getElementById('step-pay').style.display = 'block';
+    window.scrollTo(0, 0);
+
+    const stripe = Stripe(STRIPE_PUBLISHABLE_KEY);
+    const checkout = await stripe.initEmbeddedCheckout({
+      clientSecret: data.clientSecret
+    });
+    checkout.mount('#checkout');
+
+  } catch (err) {
+    console.error(err);
+    alert('Something went wrong starting checkout: ' + err.message +
+          '\n\n(The backend endpoint may not be set up yet.)');
+    submitBtn.disabled = false;
+    submitBtn.textContent = 'Sign & Continue to Payment';
+  }
+});
+
+if (params.get('paid') === '1') {
+  document.getElementById('step-form').style.display = 'none';
+  document.getElementById('step-pay').style.display = 'none';
+  document.getElementById('step-success').style.display = 'block';
+}
+
+updatePricing();
+updateClientInfo();
+</script>
 </body>
 </html>
