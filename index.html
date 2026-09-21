@@ -3,659 +3,592 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Boostinger — Service Agreement & Payment</title>
-<script async src="https://js.stripe.com/v3/buy-button.js"></script>
+<title>Boostinger — Website Design & Development Service Agreement</title>
+<script src="https://js.stripe.com/v3/"></script>
+<script src="https://cdn.jsdelivr.net/npm/signature_pad@4.2.0/dist/signature_pad.umd.min.js"></script>
 <style>
-  * { box-sizing: border-box; margin: 0; padding: 0; }
+  * { box-sizing: border-box; }
   body {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    background: #0b1220;
-    color: #e6edf6;
-    padding: 20px;
-    line-height: 1.6;
-  }
-  .container {
-    max-width: 820px;
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background: #0b0b0d;
+    color: #f2f2f2;
+    line-height: 1.5;
+    padding: 16px;
+    max-width: 720px;
     margin: 0 auto;
-    background: #111a2e;
-    border: 1px solid #1e2a44;
-    border-radius: 14px;
-    padding: 30px;
-    box-shadow: 0 10px 40px rgba(0,0,0,0.4);
   }
-  h1 { font-size: 1.6rem; margin-bottom: 6px; color: #fff; }
-  h2 { font-size: 1.15rem; margin: 22px 0 10px; color: #fff; }
-  p { color: #b8c4d8; margin-bottom: 10px; font-size: 0.95rem; }
-  .sub { color: #8b9ab3; font-size: 0.9rem; margin-bottom: 20px; }
-
-  /* Tier grid */
-  .tier-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 12px;
-    margin: 20px 0 10px;
+  header { text-align: center; padding: 16px 0 8px; }
+  header h1 {
+    margin: 0;
+    font-size: 26px;
+    letter-spacing: 1px;
+    background: linear-gradient(90deg, #f5b942, #ff7a00);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
   }
-  @media (max-width: 700px) { .tier-grid { grid-template-columns: 1fr 1fr; } }
-  @media (max-width: 460px) { .tier-grid { grid-template-columns: 1fr; } }
-
-  .tier-btn {
-    position: relative;
-    padding: 16px 14px;
-    border: 2px solid #24324d;
-    border-radius: 10px;
-    background: #0e1626;
-    color: #e6edf6;
-    cursor: pointer;
-    text-align: left;
-    transition: all 0.15s;
-    font-family: inherit;
-  }
-  .tier-btn:hover { border-color: #ff7a1a; transform: translateY(-1px); }
-  .tier-btn.selected { border-color: #ff7a1a; background: #1a1208; }
-  .tier-btn .tier-name {
-    font-size: 0.95rem;
-    font-weight: 600;
-    color: #fff;
-    display: block;
-    margin-bottom: 4px;
-  }
-  .tier-btn .tier-price {
-    font-size: 1.25rem;
-    font-weight: 700;
-    color: #ff7a1a;
-    display: block;
-  }
-  .tier-btn .tier-note {
-    font-size: 0.75rem;
-    color: #8b9ab3;
-    margin-top: 4px;
-    display: block;
-  }
-  .badge {
-    position: absolute;
-    top: -10px;
-    right: 10px;
-    background: #ff7a1a;
-    color: #0b1220;
-    font-size: 0.65rem;
-    font-weight: 700;
-    padding: 3px 8px;
-    border-radius: 20px;
-    letter-spacing: 0.5px;
-  }
-
-  /* Agreement section */
-  #agreement-section { display: none; margin-top: 26px; padding-top: 24px; border-top: 1px solid #1e2a44; }
-
-  .agreement-wrap { position: relative; }
-  .agreement-text {
-    background: #0a1120;
-    border: 1px solid #1e2a44;
-    border-radius: 10px;
-    padding: 18px;
-    max-height: 280px;
-    overflow-y: auto;
-    font-size: 0.86rem;
-    color: #aab8ce;
-  }
-  .agreement-text h3 {
-    font-size: 0.95rem;
-    color: #ff7a1a;
-    margin: 14px 0 6px;
+  header p { color: #999; margin: 4px 0 0; font-size: 13px; }
+  h2 {
+    font-size: 16px;
+    margin: 28px 0 10px;
+    color: #ff7a00;
     text-transform: uppercase;
-    letter-spacing: 0.5px;
+    letter-spacing: 1px;
   }
-  .agreement-text h3:first-child { margin-top: 0; }
-  .agreement-text p { margin-bottom: 8px; font-size: 0.86rem; color: #aab8ce; }
-  .agreement-text ul { margin: 6px 0 10px 18px; }
-  .agreement-text li { margin-bottom: 4px; font-size: 0.86rem; color: #aab8ce; }
-  .fee-box {
-    background: #16223a;
-    border-left: 3px solid #ff7a1a;
-    padding: 12px 14px;
-    border-radius: 6px;
-    margin: 10px 0;
-    font-size: 0.88rem;
-  }
-  .fee-box strong { color: #fff; }
-
-  /* Fade gradient indicating more content below */
-  .agreement-wrap::after {
-    content: '';
-    position: absolute;
-    left: 1px;
-    right: 1px;
-    bottom: 1px;
-    height: 50px;
-    border-radius: 0 0 10px 10px;
-    background: linear-gradient(to bottom, rgba(10,17,32,0) 0%, rgba(10,17,32,1) 90%);
-    pointer-events: none;
-    opacity: 1;
-    transition: opacity 0.3s;
-  }
-  .agreement-wrap.at-bottom::after { opacity: 0; }
-
-  /* Scroll hint */
-  .scroll-hint {
-    text-align: center;
-    font-size: 0.85rem;
-    color: #ff7a1a;
-    font-weight: 600;
-    margin: 14px 0 0;
-    padding: 10px;
-    border: 1px dashed #2a3a5c;
-    border-radius: 8px;
-    background: #0e1626;
-    transition: opacity 0.3s;
-  }
-  .scroll-hint.hidden { display: none; }
-
-  /* Signature block — hidden until scrolled to bottom */
-  #signature-block { display: none; margin-top: 20px; padding-top: 20px; border-top: 1px solid #1e2a44; }
-
-  /* Name + Email fields */
-  .field-row { margin-bottom: 14px; }
-  .field-row label {
-    display: block;
-    font-size: 0.85rem;
-    font-weight: 600;
-    color: #e6edf6;
-    margin-bottom: 6px;
-  }
-  .field-row input {
+  label { display: block; font-size: 14px; margin-bottom: 4px; color: #ccc; }
+  input[type="text"], input[type="email"], input[type="tel"] {
     width: 100%;
-    padding: 12px 14px;
-    border: 1px solid #2a3a5c;
+    padding: 10px;
+    margin-bottom: 12px;
     border-radius: 8px;
-    background: #0a1120;
+    border: 1px solid #333;
+    background: #151518;
     color: #fff;
-    font-size: 0.95rem;
-    font-family: inherit;
-    transition: border-color 0.15s;
+    font-size: 15px;
   }
-  .field-row input:focus {
+  input[type="text"]:focus, input[type="email"]:focus, input[type="tel"]:focus {
     outline: none;
-    border-color: #ff7a1a;
+    border-color: #ff7a00;
   }
-  .field-row input::placeholder { color: #4b5a75; }
-
-  .signature-area {
-    border: 2px dashed #2a3a5c;
+  .tier-row, .boost-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px;
+    margin-bottom: 8px;
+    border: 1px solid #333;
     border-radius: 10px;
-    background: #fff;
-    margin: 10px 0;
-    touch-action: none;
-    overflow: hidden;
-  }
-  canvas { display: block; width: 100%; height: 170px; cursor: crosshair; }
-
-  .sig-controls { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 12px; }
-  .sig-btn {
-    padding: 10px 18px;
-    border: 1px solid #2a3a5c;
-    border-radius: 8px;
-    background: #0e1626;
-    color: #e6edf6;
+    background: #151518;
     cursor: pointer;
-    font-size: 0.9rem;
-    font-family: inherit;
-    transition: all 0.15s;
   }
-  .sig-btn:hover { background: #16223a; }
-  .sig-btn.primary {
-    background: #ff7a1a;
-    color: #0b1220;
-    border-color: #ff7a1a;
-    font-weight: 600;
+  .tier-row input, .boost-row input { accent-color: #ff7a00; width: 18px; height: 18px; }
+  .tier-row.selected, .boost-row.selected { border-color: #ff7a00; background: #1c1610; }
+  .tier-name { font-weight: 600; }
+  .tier-desc { font-size: 12px; color: #999; }
+  .agreement {
+    max-height: 340px;
+    overflow-y: auto;
+    padding: 16px;
+    border: 1px solid #333;
+    border-radius: 10px;
+    background: #111114;
+    font-size: 13px;
+    color: #ccc;
   }
-  .sig-btn.primary:hover { background: #ff8f3d; }
-
-  #sig-error { color: #ff5c5c; font-size: 0.88rem; display: none; margin-top: 6px; }
-
-  /* Payment */
-  #pay-section { display: none; margin-top: 26px; padding-top: 24px; border-top: 1px solid #1e2a44; }
-  .success-msg { color: #4ade80; font-weight: 600; margin-bottom: 16px; font-size: 0.95rem; }
-  .stripe-wrap { background: #fff; border-radius: 10px; padding: 20px; display: flex; justify-content: center; }
-  .hidden { display: none !important; }
-
-  .small-note { font-size: 0.78rem; color: #6b7a94; margin-top: 14px; }
+  .agreement h3 { color: #f5b942; font-size: 14px; margin: 18px 0 6px; }
+  .agreement h3:first-child { margin-top: 0; }
+  .agreement p { margin: 6px 0; }
+  .agreement ul { margin: 6px 0 6px 18px; padding: 0; }
+  .agreement li { margin: 3px 0; }
+  .exhibit {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+    font-size: 12px;
+  }
+  .exhibit td {
+    border: 1px solid #333;
+    padding: 6px 8px;
+  }
+  .exhibit td:first-child { color: #999; width: 45%; }
+  .exhibit td:last-child { color: #fff; font-weight: 600; }
+  .sig-wrap {
+    position: relative;
+    background: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-top: 8px;
+  }
+  #signature-pad {
+    width: 100%;
+    height: 180px;
+    display: block;
+    touch-action: none;
+  }
+  .sig-hint {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #bbb;
+    font-size: 14px;
+    pointer-events: none;
+  }
+  .sig-actions {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 6px;
+  }
+  .sig-actions button {
+    background: none;
+    border: 1px solid #444;
+    color: #aaa;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 12px;
+    cursor: pointer;
+  }
+  .consent {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    margin-top: 16px;
+    font-size: 13px;
+    color: #bbb;
+  }
+  .consent input { margin-top: 3px; accent-color: #ff7a00; width: 18px; height: 18px; }
+  .total-bar {
+    position: sticky;
+    bottom: 0;
+    background: linear-gradient(90deg, #1c1610, #0b0b0d);
+    border-top: 1px solid #ff7a00;
+    padding: 12px 16px;
+    margin: 24px -16px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 15px;
+  }
+  .total-bar .amt { font-size: 22px; font-weight: 700; color: #ff7a00; }
+  .pay-btn {
+    display: block;
+    width: 100%;
+    padding: 16px;
+    margin-top: 16px;
+    border: none;
+    border-radius: 10px;
+    background: linear-gradient(90deg, #f5b942, #ff7a00);
+    color: #0b0b0d;
+    font-size: 17px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+  }
+  .pay-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+  #step-pay { display: none; }
+  #checkout { margin-top: 20px; }
+  .success {
+    text-align: center;
+    padding: 60px 20px;
+  }
+  .success h1 { color: #ff7a00; }
+  .fine { font-size: 11px; color: #666; margin-top: 20px; text-align: center; }
 </style>
 </head>
 <body>
-  <div class="container">
-    <h1>Boostinger — Get Started</h1>
-    <p class="sub">Choose your package, review the agreement, sign, and pay your deposit.</p>
 
-    <!-- 1. TIER SELECTION -->
-    <div class="tier-grid" id="tier-grid">
-      <button class="tier-btn" data-tier="basic-no-seo">
-        <span class="tier-name">Basic</span>
-        <span class="tier-price">$1,500</span>
-        <span class="tier-note">$750 deposit + $750 at launch · $75/mo</span>
-      </button>
+<!-- ====================== SUCCESS VIEW ====================== -->
+<div id="step-success" class="success" style="display:none;">
+  <h1>Payment Received</h1>
+  <p>Thank you. Your signed agreement and receipt are on the way to your inbox.</p>
+  <p class="fine">Boostinger · getboostinger@gmail.com</p>
+</div>
 
-      <button class="tier-btn" data-tier="basic-seo">
-        <span class="tier-name">Basic + BoostedSEO</span>
-        <span class="tier-price">$1,500</span>
-        <span class="tier-note">$750 deposit + $750 at launch · $300/mo</span>
-      </button>
+<!-- ====================== MAIN FORM ====================== -->
+<div id="step-form">
 
-      <button class="tier-btn" data-tier="standard-no-seo">
-        <span class="badge">POPULAR</span>
-        <span class="tier-name">Standard</span>
-        <span class="tier-price">$2,998</span>
-        <span class="tier-note">$1,499 deposit + $1,499 at launch · $150/mo</span>
-      </button>
+  <header>
+    <h1>BOOSTINGER</h1>
+    <p>Website Design &amp; Development Service Agreement</p>
+  </header>
 
-      <button class="tier-btn" data-tier="standard-seo">
-        <span class="tier-name">Standard + BoostedSEO</span>
-        <span class="tier-price">$2,998</span>
-        <span class="tier-note">$1,499 deposit + $1,499 at launch · $365/mo</span>
-      </button>
+  <!-- ---------- CLIENT INFO ---------- -->
+  <h2>1 · Your Information</h2>
+  <label for="businessName">Business Name</label>
+  <input type="text" id="businessName" placeholder="Acme LLC">
 
-      <button class="tier-btn" data-tier="premium-no-seo">
-        <span class="tier-name">Premium</span>
-        <span class="tier-price">$4,998</span>
-        <span class="tier-note">$2,499 deposit + $2,499 at launch · $300/mo</span>
-      </button>
+  <label for="clientName">Contact Name</label>
+  <input type="text" id="clientName" placeholder="Jane Doe">
 
-      <button class="tier-btn" data-tier="premium-seo">
-        <span class="tier-name">Premium + BoostedSEO</span>
-        <span class="tier-price">$4,998</span>
-        <span class="tier-note">$2,499 deposit + $2,499 at launch · $500/mo</span>
-      </button>
-    </div>
+  <label for="clientEmail">Email</label>
+  <input type="email" id="clientEmail" placeholder="jane@acme.com">
 
-    <!-- 2. AGREEMENT + SIGNATURE -->
-    <div id="agreement-section">
-      <h2>Service Agreement</h2>
+  <label for="clientPhone">Phone</label>
+  <input type="tel" id="clientPhone" placeholder="(555) 123-4567">
 
-      <div class="agreement-wrap" id="agreement-wrap">
-        <div class="agreement-text" id="agreement-text"></div>
-      </div>
+  <label for="clientAddress">Address</label>
+  <input type="text" id="clientAddress" placeholder="123 Main St, City, State ZIP">
 
-      <p class="scroll-hint" id="scroll-hint">↓ Scroll to the bottom of the agreement to continue</p>
+  <!-- ---------- PACKAGE ---------- -->
+  <h2>2 · Choose Your Package</h2>
 
-      <!-- Signature block: hidden until scrolled to bottom -->
-      <div id="signature-block">
-        <p><strong style="color:#fff;">Your information</strong></p>
-        <div class="field-row">
-          <label for="client-name">Full Name</label>
-          <input type="text" id="client-name" placeholder="e.g. Jane Smith" autocomplete="name">
-        </div>
-        <div class="field-row">
-          <label for="client-email">Email Address</label>
-          <input type="email" id="client-email" placeholder="e.g. jane@yourbusiness.com" autocomplete="email">
-        </div>
+  <label class="tier-row" data-tier="basic">
+    <input type="radio" name="tier" value="basic" checked>
+    <span>
+      <span class="tier-name">Basic</span>
+      <span class="tier-desc">Single-page or simple brochure site, template design, basic contact form.</span>
+    </span>
+  </label>
 
-        <p style="margin-top:18px;"><strong style="color:#fff;">Please sign below:</strong></p>
-        <div class="signature-area">
-          <canvas id="signature-pad"></canvas>
-        </div>
-        <div class="sig-controls">
-          <button class="sig-btn" id="clear-sig">Clear</button>
-          <button class="sig-btn primary" id="confirm-sig">Confirm Signature & Continue to Payment</button>
-        </div>
-        <p id="sig-error">Please complete all fields and draw your signature.</p>
-      </div>
-    </div>
+  <label class="tier-row" data-tier="standard">
+    <input type="radio" name="tier" value="standard">
+    <span>
+      <span class="tier-name">Standard</span>
+      <span class="tier-desc">Multi-page custom site, lead forms, basic integrations (booking, maps, social).</span>
+    </span>
+  </label>
 
-    <!-- 3. PAYMENT -->
-    <div id="pay-section">
-      <p class="success-msg">✓ Signature confirmed. Complete your deposit payment below:</p>
+  <label class="tier-row" data-tier="premium">
+    <input type="radio" name="tier" value="premium">
+    <span>
+      <span class="tier-name">Premium</span>
+      <span class="tier-desc">Advanced functionality, e-commerce, complex integrations, bespoke design.</span>
+    </span>
+  </label>
 
-      <div class="stripe-wrap hidden" id="stripe-basic-no-seo">
-        <stripe-buy-button buy-button-id="buy_btn_BASIC_NOSEO_HERE" publishable-key="pk_live_YOUR_KEY_HERE"></stripe-buy-button>
-      </div>
-      <div class="stripe-wrap hidden" id="stripe-basic-seo">
-        <stripe-buy-button buy-button-id="buy_btn_BASIC_SEO_HERE" publishable-key="pk_live_YOUR_KEY_HERE"></stripe-buy-button>
-      </div>
-      <div class="stripe-wrap hidden" id="stripe-standard-no-seo">
-        <stripe-buy-button buy-button-id="buy_btn_STANDARD_NOSEO_HERE" publishable-key="pk_live_YOUR_KEY_HERE"></stripe-buy-button>
-      </div>
-      <div class="stripe-wrap hidden" id="stripe-standard-seo">
-        <stripe-buy-button buy-button-id="buy_btn_STANDARD_SEO_HERE" publishable-key="pk_live_YOUR_KEY_HERE"></stripe-buy-button>
-      </div>
-      <div class="stripe-wrap hidden" id="stripe-premium-no-seo">
-        <stripe-buy-button buy-button-id="buy_btn_PREMIUM_NOSEO_HERE" publishable-key="pk_live_YOUR_KEY_HERE"></stripe-buy-button>
-      </div>
-      <div class="stripe-wrap hidden" id="stripe-premium-seo">
-        <stripe-buy-button buy-button-id="buy_btn_PREMIUM_SEO_HERE" publishable-key="pk_live_YOUR_KEY_HERE"></stripe-buy-button>
-      </div>
+  <label class="boost-row" id="boostRow">
+    <input type="checkbox" id="boost">
+    <span>
+      <span class="tier-name">Add BoostedSEO</span>
+      <span class="tier-desc">Daily AI-written articles, backlinks, monthly ranking reports. Bundled discount applied.</span>
+    </span>
+  </label>
 
-      <p class="small-note">Payment is processed securely through Stripe. Your deposit is non-refundable once work begins.</p>
-    </div>
+  <!-- ---------- AGREEMENT ---------- -->
+  <h2>3 · Service Agreement</h2>
+  <div class="agreement">
+
+    <h3>1. Effective Date &amp; Parties</h3>
+    <p>This Website Design &amp; Development Service Agreement ("Agreement") is made and entered into as of the date of signature below.</p>
+    <p><strong>Developer:</strong> Nick Vogen DBA Boostinger · 42538 Sparks Ct. Temecula, CA 92592 · getboostinger@gmail.com · (951) 428-1407</p>
+    <p><strong>Client:</strong> <span id="exClient">—</span></p>
+
+    <h3>2. Scope of Services</h3>
+    <p>Developer agrees to design, develop, and deliver a custom website for Client as described in Exhibit A. Any work outside the scope defined in Exhibit A — including additional pages, custom features, or e-commerce functionality not originally agreed upon — requires a written change order and may incur additional fees.</p>
+
+    <h3>3. Project Fee &amp; Payment Terms</h3>
+    <ul>
+      <li>Total Project Fee is stated in Exhibit A.</li>
+      <li>50% deposit is due at signing before work begins.</li>
+      <li>Remaining 50% balance is due upon completion and prior to site launch.</li>
+      <li>Accepted payment methods: Cash, Card (Stripe), Check, Wire.</li>
+      <li>Once work has commenced, the deposit is non-refundable except as described in Section 11.</li>
+    </ul>
+
+    <h3>4. Ongoing Maintenance, Hosting &amp; Security</h3>
+    <p>Following launch, Client agrees to a recurring monthly fee (specified in Exhibit A) covering website hosting, routine security updates and monitoring, minor content updates (under 15 minutes), uptime monitoring, and backups.</p>
+    <p>This monthly fee is separate from the Project Fee and any BoostedSEO fee. Client may cancel the maintenance plan with 30 days' written notice. After cancellation, Developer is not obligated to continue hosting or updating the site. Client is responsible for arranging migration.</p>
+    <p><strong>Migration Fee:</strong> If Client requests assistance migrating to a new host, a fee of $300 applies.</p>
+
+    <h3>5. BoostedSEO Monthly Service</h3>
+    <p>Client may elect to add Boostinger's BoostedSEO monthly service, which includes on-page SEO optimization, AI-driven competitor research, daily published articles (average 1,500–2,500 words), monthly backlinks and mentions, and monthly performance reports.</p>
+    <p><em>Disclaimer: SEO results vary based on search engine algorithms, competition, and market conditions. Developer does not guarantee specific rankings, traffic, or business outcomes.</em></p>
+
+    <h3>6. Delivery Timeline</h3>
+    <p>Developer will deliver the completed website within 7 business days for Basic and Standard Tier projects, or 14 business days for Premium Tier projects. The timeline begins only after: (1) full execution of this Agreement, (2) receipt of the deposit, and (3) receipt of all required Client content and assets.</p>
+    <p><strong>Client Delays:</strong> Delays caused by Client's failure to provide timely content, feedback, or approvals will extend the delivery date proportionally. If Client is inactive for 14 days, the project is paused. If inactive for 30 days, Developer may close the project and a restart fee may apply.</p>
+
+    <h3>7. Client Responsibilities</h3>
+    <p>Client agrees to provide all necessary content (text, images, logos, branding materials), feedback, and approvals in a timely manner. Client warrants that all materials provided are owned by Client or properly licensed. Developer is not liable for copyright issues arising from Client-provided materials.</p>
+
+    <h3>7A. Indemnification</h3>
+    <p>Client shall indemnify, defend, and hold harmless Developer from third-party claims arising out of Client's use of the website, Client's breach of this Agreement, or materials provided by Client. Developer shall indemnify Client against third-party claims that custom code or design elements created by Developer infringe a third party's intellectual property rights, excluding claims arising from Client-supplied materials or Client modifications.</p>
+
+    <h3>8. Revisions</h3>
+    <p>The Project Fee includes two (2) rounds of revisions. Both rounds must be requested and the corresponding Client feedback provided within thirty (30) calendar days following delivery of the initial draft. Additional revisions or substantial scope changes will be billed at $65/hour or handled via a written change order.</p>
+
+    <h3>8.1 Acceptance</h3>
+    <p>Upon delivery of the initial draft or any subsequent revision, Client shall have five (5) business days to review the deliverable and provide written notice of acceptance or of any material non-conformity. If Client fails to provide written notice within the five (5) business day review period, the deliverable shall be deemed accepted.</p>
+
+    <h3>9. Ownership &amp; Intellectual Property</h3>
+    <p>Client owns all website content, branding, and domain. Developer retains ownership of proprietary tools, templates, and platform technology used to build or host the site. Developer may showcase the completed project in its portfolio unless Client opts out in writing. Client opt-out fee is $100.</p>
+
+    <h3>10. Third-Party Costs &amp; Third-Party Failures</h3>
+    <p>Costs for domain registration, plugins, licenses, premium stock imagery, or other third-party services are not included unless stated in Exhibit A. Developer is not responsible for outages, failures, or issues caused by third-party providers, hosting companies, plugins, APIs, or external services.</p>
+
+    <h3>11. Cancellation &amp; Termination</h3>
+    <ul>
+      <li>Either Party may terminate this Agreement in writing prior to project completion.</li>
+      <li>If Client cancels after work has begun, the deposit is non-refundable. Client will be billed for any additional work completed beyond the deposit amount.</li>
+      <li>If Developer terminates without cause after receiving the deposit, any unearned portion will be refunded.</li>
+    </ul>
+
+    <h3>12. Late Payment</h3>
+    <p>Invoices unpaid after 7 days from delivery of completed website are subject to a 5% late fee. Developer may withhold final files, hosting access, or site transfer until the balance is paid. If Client is unresponsive after 60 days, the project will assume forfeiture and the domain will be disconnected from hosting services.</p>
+
+    <h3>13. Warranty &amp; Post-Launch Support</h3>
+    <p>Developer warrants that the website will function substantially as described in Exhibit A and on current major browsers as of the delivery date. A 14-day warranty period applies for bug fixes. Bugs caused by Client edits or third-party changes are not covered. Except as stated, the website is provided "as is." Developer makes no guarantees regarding search rankings, sales, leads, or business results.</p>
+
+    <h3>14. Limitation of Liability</h3>
+    <p>Developer's total liability under this Agreement shall not exceed the total amount paid by Client. Developer is not liable for indirect, incidental, or consequential damages, including lost profits or lost data.</p>
+
+    <h3>15. Confidentiality</h3>
+    <p>Both Parties agree to keep confidential any proprietary or sensitive business information shared during this engagement.</p>
+
+    <h3>16. Independent Contractor</h3>
+    <p>Developer is an independent contractor. Nothing in this Agreement creates an employment, partnership, agency, or joint venture relationship.</p>
+
+    <h3>17. Governing Law &amp; Dispute Resolution</h3>
+    <p>This Agreement is governed by the laws of the State of California. Before litigation, Parties agree to attempt resolution through mediation. Venue for disputes shall be in Riverside County, California.</p>
+
+    <h3>18. Entire Agreement</h3>
+    <p>This Agreement, including Exhibit A and any signed change orders, constitutes the entire agreement between the Parties. Amendments must be made in writing and signed by both Parties.</p>
+
+    <h3>19. Force Majeure</h3>
+    <p>Neither Party shall be liable for delay or failure to perform obligations (other than payment obligations) due to causes beyond its reasonable control, including natural disasters, internet or utility outages, acts of government, labor disputes, or failures of third-party providers. If such an event continues for more than 30 days, either Party may terminate this Agreement upon written notice, with Section 11 governing the resulting deposit/payment treatment.</p>
+
+    <h3>20. Assignment</h3>
+    <p>Neither Party may assign this Agreement without the prior written consent of the other Party, except that Developer may assign this Agreement to an affiliate or in connection with a merger, acquisition, or sale of all or substantially all of its assets without Client's consent. Developer may also subcontract portions of the work to third parties without Client's consent, provided Developer remains responsible for their performance.</p>
+
+    <h3>EXHIBIT A — Project Scope &amp; Specifications</h3>
+    <table class="exhibit">
+      <tr><td>Client / Business Name</td><td id="exBiz">—</td></tr>
+      <tr><td>Complexity Tier Selected</td><td id="exTier">Basic</td></tr>
+      <tr><td>BoostedSEO Add-On</td><td id="exBoost">No</td></tr>
+      <tr><td>Monthly Maintenance Plan</td><td id="exMonthly">$75 / month</td></tr>
+      <tr><td>Total Project Fee</td><td id="exFee">$1,100</td></tr>
+      <tr><td>Deposit Due at Signing (50%)</td><td id="exDeposit">$500</td></tr>
+      <tr><td>Balance Due at Delivery (50%)</td><td id="exBalance">$600</td></tr>
+      <tr><td>Total Due Today</td><td id="exTotal">$575</td></tr>
+      <tr><td>Target Delivery Date</td><td>7 business days from signing</td></tr>
+      <tr><td>Effective Date</td><td id="exDate">—</td></tr>
+    </table>
+    <p style="font-size:11px;color:#888;margin-top:10px;">
+      <strong>FIRST CLIENT FOUNDER'S PROMOTION (One-Time Offer):</strong>
+      Project Fee discounts reflected above. If BoostedSEO Add-On is selected, the bundled monthly rate is discounted for the first 6 months, after which it reverts to the standard bundled rate. This offer is exclusive to this Client and this Agreement only. Developer reserves the right to withdraw this offer if the project is paused or canceled.
+    </p>
+
+    <h3>21. Signatures</h3>
+    <p>IN WITNESS WHEREOF, the Parties have executed this Agreement as of the Effective Date first written above. By signing below, Client agrees to all terms above and consents to electronic signature.</p>
+
   </div>
 
+  <!-- ---------- SIGNATURE ---------- -->
+  <h2>4 · Sign Below</h2>
+  <div class="sig-wrap">
+    <canvas id="signature-pad"></canvas>
+    <div class="sig-hint" id="sigHint">Sign here with your finger</div>
+  </div>
+  <div class="sig-actions">
+    <button type="button" id="clearSig">Clear</button>
+  </div>
+
+  <label class="consent">
+    <input type="checkbox" id="consent">
+    <span>I have read and agree to the Service Agreement above, and I consent to sign electronically. I understand the deposit is due today and is non-refundable once work begins.</span>
+  </label>
+
+  <!-- ---------- TOTAL + PAY ---------- -->
+  <div class="total-bar">
+    <span>Due at signing</span>
+    <span class="amt">$<span id="amount">575</span></span>
+  </div>
+
+  <button class="pay-btn" id="submitBtn">Sign &amp; Continue to Payment</button>
+  <p class="fine">Payments are securely processed by Stripe.</p>
+
+</div>
+
+<!-- ====================== CHECKOUT VIEW ====================== -->
+<div id="step-pay">
+  <header>
+    <h1>BOOSTINGER</h1>
+    <p>Secure Payment</p>
+  </header>
+  <div id="checkout"></div>
+</div>
+
 <script>
-/* ============================================================
-   TIER DATA — edit these values to change pricing / scope
-   ============================================================ */
-const TIERS = {
-  'basic-no-seo': {
-    name: 'Basic',
-    scope: 'Single-page or simple multi-page brochure site, template-based design, basic contact form.',
-    projectFee: 1500,
-    deposit: 750,
-    balance: 750,
-    maintenance: 75,
-    maintenanceLabel: 'Base Maintenance',
-    delivery: '7 business days',
-    seo: false
+/* =========================================================
+   STRIPE PUBLISHABLE KEY — replace with your live key later
+   Test key starts with pk_test_, live key starts with pk_live_
+   ========================================================= */
+const STRIPE_PUBLISHABLE_KEY = 'pk_test_REPLACE_ME';
+
+/* ---------- PRICING ---------- */
+const PRICES = {
+  basic: {
+    label: 'Basic',
+    fee: 1100, balance: 600,
+    noBoost: { deposit: 500, monthly: 75,  total: 575  },
+    boost:   { deposit: 500, monthly: 200, monthlyAfter: 300, total: 700  }
   },
-  'basic-seo': {
-    name: 'Basic + BoostedSEO',
-    scope: 'Single-page or simple multi-page brochure site, template-based design, basic contact form. Includes BoostedSEO monthly service.',
-    projectFee: 1500,
-    deposit: 750,
-    balance: 750,
-    maintenance: 300,
-    maintenanceLabel: 'Maintenance + BoostedSEO',
-    delivery: '7 business days',
-    seo: true
+  standard: {
+    label: 'Standard',
+    fee: 2600, balance: 1300,
+    noBoost: { deposit: 1300, monthly: 150, total: 1450 },
+    boost:   { deposit: 1300, monthly: 265, monthlyAfter: 365, total: 1565 }
   },
-  'standard-no-seo': {
-    name: 'Standard',
-    scope: 'Multi-page custom-designed site, contact / lead forms, basic integrations (booking, maps, social).',
-    projectFee: 2998,
-    deposit: 1499,
-    balance: 1499,
-    maintenance: 150,
-    maintenanceLabel: 'Base Maintenance',
-    delivery: '7 business days',
-    seo: false
-  },
-  'standard-seo': {
-    name: 'Standard + BoostedSEO',
-    scope: 'Multi-page custom-designed site, contact / lead forms, basic integrations (booking, maps, social). Includes BoostedSEO monthly service.',
-    projectFee: 2998,
-    deposit: 1499,
-    balance: 1499,
-    maintenance: 365,
-    maintenanceLabel: 'Maintenance + BoostedSEO',
-    delivery: '7 business days',
-    seo: true
-  },
-  'premium-no-seo': {
-    name: 'Premium',
-    scope: 'Advanced custom functionality, e-commerce, complex integrations, or bespoke design work. Embedded material, API functions.',
-    projectFee: 4998,
-    deposit: 2499,
-    balance: 2499,
-    maintenance: 300,
-    maintenanceLabel: 'Base Maintenance',
-    delivery: '14 business days',
-    seo: false
-  },
-  'premium-seo': {
-    name: 'Premium + BoostedSEO',
-    scope: 'Advanced custom functionality, e-commerce, complex integrations, or bespoke design work. Embedded material, API functions. Includes BoostedSEO monthly service.',
-    projectFee: 4998,
-    deposit: 2499,
-    balance: 2499,
-    maintenance: 500,
-    maintenanceLabel: 'Maintenance + BoostedSEO',
-    delivery: '14 business days',
-    seo: true
+  premium: {
+    label: 'Premium',
+    fee: 4600, balance: 2300,
+    noBoost: { deposit: 2300, monthly: 300, total: 2600 },
+    boost:   { deposit: 2300, monthly: 400, monthlyAfter: 500, total: 2700 }
   }
 };
 
-/* ============================================================
-   AGREEMENT TEMPLATE
-   ============================================================ */
-function buildAgreement(t) {
-  const totalDueAtSigning = t.deposit + t.maintenance;
+/* ---------- DOM ---------- */
+const tierInputs   = document.querySelectorAll('input[name="tier"]');
+const boostBox     = document.getElementById('boost');
+const boostRow     = document.getElementById('boostRow');
+const amountEl     = document.getElementById('amount');
+const totalEl      = document.querySelector('.total-bar');
+const submitBtn    = document.getElementById('submitBtn');
+const consentBox   = document.getElementById('consent');
 
-  const seoClause = t.seo ? `
-    <h3>BoostedSEO Monthly Service</h3>
-    <p>Client has elected the BoostedSEO bundle at <strong>$${t.maintenance}/month</strong>. This includes on-page SEO optimization, AI-driven competitor research (500+ search terms), daily long-form article publishing (1,500–2,500 words), monthly backlinks, and a monthly performance report. SEO results vary based on search engine algorithms, competition, and market conditions. Developer does not guarantee specific rankings, traffic, or business outcomes.</p>
-  ` : `
-    <h3>Maintenance Plan</h3>
-    <p>Following launch, Client agrees to a recurring monthly maintenance fee of <strong>$${t.maintenance}/month</strong> covering website hosting, routine security updates and monitoring, minor content updates (under 15 minutes), uptime monitoring, and backups. Client may cancel with 30 days' written notice. A $300 migration fee applies if Developer assists with migrating to a new host.</p>
-  `;
+const exBiz = document.getElementById('exBiz');
+const exTier = document.getElementById('exTier');
+const exBoost = document.getElementById('exBoost');
+const exMonthly = document.getElementById('exMonthly');
+const exFee = document.getElementById('exFee');
+const exDeposit = document.getElementById('exDeposit');
+const exBalance = document.getElementById('exBalance');
+const exTotal = document.getElementById('exTotal');
+const exClient = document.getElementById('exClient');
+const exDate = document.getElementById('exDate');
 
-  return `
-    <h3>1. Parties</h3>
-    <p>This Agreement is between <strong>Boostinger</strong> (Nick Vogen, DBA Boostinger, 42538 Sparks Ct., Temecula, CA 92592) ("Developer") and the Client identified below.</p>
+const businessNameEl = document.getElementById('businessName');
+const clientNameEl   = document.getElementById('clientName');
 
-    <h3>2. Scope of Services</h3>
-    <p>Developer agrees to design, develop, and deliver a custom website as described below. Any work outside this scope requires a written change order and may incur additional fees.</p>
-    <p><strong>Selected Package:</strong> ${t.name}</p>
-    <p>${t.scope}</p>
-
-    <h3>3. Project Fee & Payment Terms</h3>
-    <div class="fee-box">
-      <strong>Total Project Fee:</strong> $${t.projectFee.toLocaleString()}<br>
-      <strong>Deposit due at signing (50%):</strong> $${t.deposit.toLocaleString()}<br>
-      <strong>${t.maintenanceLabel} (first month):</strong> $${t.maintenance.toLocaleString()}<br>
-      <strong>Total due today:</strong> $${totalDueAtSigning.toLocaleString()}<br>
-      <strong>Balance due at delivery (50%):</strong> $${t.balance.toLocaleString()}
-    </div>
-    <p>Accepted payment methods: Cash, Card (Stripe), Check, or Wire. Once work has commenced, the deposit is non-refundable except as described in Section 8 (Cancellation).</p>
-
-    ${seoClause}
-
-    <h3>4. Delivery Timeline</h3>
-    <p>Developer will deliver the completed website within <strong>${t.delivery}</strong> after: (1) full execution of this Agreement, (2) receipt of the deposit, and (3) receipt of all Client content and assets. Delays caused by Client will extend the delivery date proportionally. If Client is inactive for 14 days, the project is paused; at 30 days, Developer may close the project and a restart fee may apply.</p>
-
-    <h3>5. Client Responsibilities</h3>
-    <p>Client agrees to provide all necessary content (text, images, logos, branding) and timely feedback. Client warrants that all materials provided are owned by Client or properly licensed.</p>
-
-    <h3>6. Revisions & Acceptance</h3>
-    <p>The Project Fee includes <strong>two (2) rounds of revisions</strong>, requested within 30 days of the initial draft. Additional revisions are billed at $65/hour. Client has 5 business days to review each deliverable; failure to respond constitutes acceptance. Final payment is due upon acceptance and prior to launch.</p>
-
-    <h3>7. Ownership</h3>
-    <p>Client owns all website content, branding, and domain. Developer retains ownership of proprietary tools, templates, and platform technology. Developer may showcase the completed project in its portfolio unless Client opts out in writing ($100 opt-out fee).</p>
-
-    <h3>8. Cancellation & Termination</h3>
-    <p>Either Party may terminate in writing prior to completion. If Client cancels after work has begun, the deposit is non-refundable and Client will be billed for additional work completed. If Developer terminates without cause, any unearned portion of the deposit will be refunded.</p>
-
-    <h3>9. Late Payment</h3>
-    <p>Invoices unpaid after 7 days are subject to a 5% late fee. Developer may withhold final files or site transfer until balance is paid. If Client is unresponsive for 60 days, the project assumes forfeiture.</p>
-
-    <h3>10. Warranty</h3>
-    <p>A 14-day warranty applies for bug fixes after launch. Bugs caused by Client edits or third-party changes are not covered. The website is provided "as is" — Developer makes no guarantees regarding search rankings, sales, leads, or business results.</p>
-
-    <h3>11. Limitation of Liability</h3>
-    <p>Developer's total liability shall not exceed the total amount paid by Client. Developer is not liable for indirect, incidental, or consequential damages.</p>
-
-    <h3>12. Governing Law</h3>
-    <p>This Agreement is governed by the laws of the State of California. Parties agree to attempt mediation before litigation. Venue: Riverside County, California.</p>
-
-    <h3>13. Entire Agreement</h3>
-    <p>This Agreement constitutes the entire agreement between the Parties. Amendments must be in writing and signed by both Parties.</p>
-
-    <p style="margin-top:14px; color:#fff;"><strong>By signing below, you agree to these terms and authorize the charge of $${totalDueAtSigning.toLocaleString()} for the selected package.</strong></p>
-  `;
-}
-
-/* ============================================================
-   STATE
-   ============================================================ */
-let selectedTier = null;
-let hasSignature = false;
-
+/* ---------- SIGNATURE PAD ---------- */
 const canvas = document.getElementById('signature-pad');
-const ctx = canvas.getContext('2d');
-let drawing = false;
+const sigHint = document.getElementById('sigHint');
+const signaturePad = new SignaturePad(canvas, {
+  backgroundColor: 'rgba(255,255,255,0)',
+  penColor: '#111'
+});
 
-const agreementText = document.getElementById('agreement-text');
-const agreementWrap = document.getElementById('agreement-wrap');
-const signatureBlock = document.getElementById('signature-block');
-const scrollHint = document.getElementById('scroll-hint');
-const nameInput = document.getElementById('client-name');
-const emailInput = document.getElementById('client-email');
-
-/* ============================================================
-   CANVAS RESIZE
-   ============================================================ */
 function resizeCanvas() {
-  const rect = canvas.getBoundingClientRect();
-  let saved = null;
-  if (canvas.width > 0 && canvas.height > 0 && hasSignature) {
-    saved = canvas.toDataURL();
-  }
-  canvas.width = rect.width;
-  canvas.height = rect.height;
-  ctx.lineWidth = 2.2;
-  ctx.lineCap = 'round';
-  ctx.lineJoin = 'round';
-  ctx.strokeStyle = '#111';
-  if (saved) {
-    const img = new Image();
-    img.onload = () => ctx.drawImage(img, 0, 0);
-    img.src = saved;
-  }
+  const ratio = Math.max(window.devicePixelRatio || 1, 1);
+  canvas.width  = canvas.offsetWidth  * ratio;
+  canvas.height = canvas.offsetHeight * ratio;
+  canvas.getContext('2d').scale(ratio, ratio);
+  signaturePad.clear();
 }
-window.addEventListener('resize', () => {
-  if (signatureBlock.style.display !== 'none') resizeCanvas();
+window.addEventListener('resize', resizeCanvas);
+resizeCanvas();
+
+signaturePad.addEventListener('beginStroke', () => { sigHint.style.display = 'none'; });
+
+document.getElementById('clearSig').addEventListener('click', () => {
+  signaturePad.clear();
+  sigHint.style.display = 'block';
 });
 
-/* ============================================================
-   TIER SELECTION
-   ============================================================ */
-document.querySelectorAll('.tier-btn').forEach(btn => {
-  btn.addEventListener('click', () => {
-    document.querySelectorAll('.tier-btn').forEach(b => b.classList.remove('selected'));
-    btn.classList.add('selected');
-    selectedTier = btn.dataset.tier;
+/* ---------- LIVE PRICING ---------- */
+function currentSelection() {
+  const tier = document.querySelector('input[name="tier"]:checked').value;
+  const boost = boostBox.checked;
+  const plan = PRICES[tier];
+  const pricing = boost ? plan.boost : plan.noBoost;
+  return { tier, boost, plan, pricing };
+}
 
-    agreementText.innerHTML = buildAgreement(TIERS[selectedTier]);
-    document.getElementById('agreement-section').style.display = 'block';
-    document.getElementById('pay-section').style.display = 'none';
-    document.querySelectorAll('.stripe-wrap').forEach(el => el.classList.add('hidden'));
+function updatePricing() {
+  const { tier, boost, plan, pricing } = currentSelection();
 
-    // Reset scroll + signature gate + fields
-    agreementText.scrollTop = 0;
-    signatureBlock.style.display = 'none';
-    scrollHint.classList.remove('hidden');
-    agreementWrap.classList.remove('at-bottom');
-    hasSignature = false;
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    document.getElementById('sig-error').style.display = 'none';
-
-    setTimeout(() => {
-      if (agreementText.scrollHeight <= agreementText.clientHeight + 4) {
-        revealSignature();
-      } else {
-        resizeCanvas();
-      }
-    }, 50);
-
-    document.getElementById('agreement-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  // Highlight selected tier
+  document.querySelectorAll('.tier-row').forEach(row => {
+    row.classList.toggle('selected', row.dataset.tier === tier);
   });
+  boostRow.classList.toggle('selected', boost);
+
+  // Amount due
+  amountEl.textContent = pricing.total.toLocaleString();
+
+  // Exhibit A
+  exTier.textContent = plan.label;
+  exBoost.textContent = boost ? 'Yes' : 'No';
+  exMonthly.textContent = boost
+    ? `$${pricing.monthly}/month for first 6 months, then $${pricing.monthlyAfter}/month`
+    : `$${pricing.monthly}/month`;
+  exFee.textContent = '$' + plan.fee.toLocaleString();
+  exDeposit.textContent = '$' + pricing.deposit.toLocaleString();
+  exBalance.textContent = '$' + plan.balance.toLocaleString();
+  exTotal.textContent = '$' + pricing.total.toLocaleString();
+}
+
+tierInputs.forEach(el => el.addEventListener('change', updatePricing));
+boostBox.addEventListener('change', updatePricing);
+
+/* ---------- LIVE CLIENT INFO IN EXHIBIT A ---------- */
+function updateClientInfo() {
+  const biz = businessNameEl.value.trim() || '—';
+  const name = clientNameEl.value.trim() || '—';
+  exBiz.textContent = biz;
+  exClient.textContent = biz + (name !== '—' ? ' · ' + name : '');
+}
+businessNameEl.addEventListener('input', updateClientInfo);
+clientNameEl.addEventListener('input', updateClientInfo);
+
+/* ---------- EFFECTIVE DATE ---------- */
+exDate.textContent = new Date().toLocaleDateString('en-US', {
+  year: 'numeric', month: 'long', day: 'numeric'
 });
 
-/* ============================================================
-   SCROLL-TO-BOTTOM DETECTION
-   ============================================================ */
-function revealSignature() {
-  signatureBlock.style.display = 'block';
-  scrollHint.classList.add('hidden');
-  agreementWrap.classList.add('at-bottom');
-  setTimeout(resizeCanvas, 30);
-}
+/* ---------- SUBMIT ---------- */
+submitBtn.addEventListener('click', async () => {
+  const businessName = businessNameEl.value.trim();
+  const clientName   = clientNameEl.value.trim();
+  const clientEmail  = document.getElementById('clientEmail').value.trim();
+  const clientPhone  = document.getElementById('clientPhone').value.trim();
+  const clientAddress = document.getElementById('clientAddress').value.trim();
 
-function checkScrolledToBottom() {
-  const threshold = 16;
-  const atBottom = agreementText.scrollTop + agreementText.clientHeight >= agreementText.scrollHeight - threshold;
-  if (atBottom) revealSignature();
-}
+  if (!businessName)   return alert('Please enter your business name.');
+  if (!clientName)     return alert('Please enter your contact name.');
+  if (!clientEmail || !clientEmail.includes('@')) return alert('Please enter a valid email.');
+  if (signaturePad.isEmpty()) return alert('Please sign in the signature box.');
+  if (!consentBox.checked)    return alert('Please check the consent box to continue.');
 
-agreementText.addEventListener('scroll', checkScrolledToBottom);
+  const { tier, boost, pricing } = currentSelection();
+  const signature = signaturePad.toDataURL('image/png');
 
-/* ============================================================
-   SIGNATURE PAD
-   ============================================================ */
-function getPos(e) {
-  const rect = canvas.getBoundingClientRect();
-  const clientX = e.touches ? e.touches[0].clientX : e.clientX;
-  const clientY = e.touches ? e.touches[0].clientY : e.clientY;
-  return { x: clientX - rect.left, y: clientY - rect.top };
-}
-function startDraw(e) {
-  e.preventDefault();
-  drawing = true;
-  hasSignature = true;
-  const p = getPos(e);
-  ctx.beginPath();
-  ctx.moveTo(p.x, p.y);
-}
-function draw(e) {
-  if (!drawing) return;
-  e.preventDefault();
-  const p = getPos(e);
-  ctx.lineTo(p.x, p.y);
-  ctx.stroke();
-}
-function stopDraw() { drawing = false; }
+  submitBtn.disabled = true;
+  submitBtn.textContent = 'Preparing secure checkout…';
 
-canvas.addEventListener('mousedown', startDraw);
-canvas.addEventListener('mousemove', draw);
-canvas.addEventListener('mouseup', stopDraw);
-canvas.addEventListener('mouseleave', stopDraw);
-canvas.addEventListener('touchstart', startDraw, { passive: false });
-canvas.addEventListener('touchmove', draw, { passive: false });
-canvas.addEventListener('touchend', stopDraw);
+  try {
+    const res = await fetch('/api/create-checkout-session', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        tier,
+        boost,
+        businessName,
+        clientName,
+        clientEmail,
+        clientPhone,
+        clientAddress,
+        signature
+      })
+    });
 
-document.getElementById('clear-sig').addEventListener('click', () => {
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-  hasSignature = false;
+    if (!res.ok) throw new Error('Server error ' + res.status);
+    const data = await res.json();
+    if (!data.clientSecret) throw new Error('No client secret returned');
+
+    // Swap views
+    document.getElementById('step-form').style.display = 'none';
+    document.getElementById('step-pay').style.display = 'block';
+    window.scrollTo(0, 0);
+
+    // Mount Stripe embedded checkout
+    const stripe = Stripe(STRIPE_PUBLISHABLE_KEY);
+    const checkout = await stripe.initEmbeddedCheckout({
+      clientSecret: data.clientSecret
+    });
+    checkout.mount('#checkout');
+
+  } catch (err) {
+    console.error(err);
+    alert('Something went wrong starting checkout: ' + err.message +
+          '\n\n(The backend endpoint may not be set up yet.)');
+    submitBtn.disabled = false;
+    submitBtn.textContent = 'Sign & Continue to Payment';
+  }
 });
 
-/* ============================================================
-   VALIDATION HELPERS
-   ============================================================ */
-function isValidEmail(email) {
-  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim());
+/* ---------- SUCCESS RETURN ---------- */
+const params = new URLSearchParams(window.location.search);
+if (params.get('paid') === '1') {
+  document.getElementById('step-form').style.display = 'none';
+  document.getElementById('step-pay').style.display = 'none';
+  document.getElementById('step-success').style.display = 'block';
 }
 
-/* ============================================================
-   CONFIRM → REVEAL STRIPE
-   ============================================================ */
-document.getElementById('confirm-sig').addEventListener('click', () => {
-  const name = nameInput.value.trim();
-  const email = emailInput.value.trim();
-  const errorEl = document.getElementById('sig-error');
-
-  if (!name) {
-    errorEl.textContent = 'Please enter your full name.';
-    errorEl.style.display = 'block';
-    nameInput.focus();
-    return;
-  }
-  if (!isValidEmail(email)) {
-    errorEl.textContent = 'Please enter a valid email address.';
-    errorEl.style.display = 'block';
-    emailInput.focus();
-    return;
-  }
-  if (!hasSignature) {
-    errorEl.textContent = 'Please draw your signature above.';
-    errorEl.style.display = 'block';
-    return;
-  }
-
-  errorEl.style.display = 'none';
-
-  // Pre-fill Stripe Buy Button with the client's name + email
-  const target = document.getElementById('stripe-' + selectedTier);
-  if (target) {
-    const btn = target.querySelector('stripe-buy-button');
-    if (btn) {
-      btn.setAttribute('customer-name', name);
-      btn.setAttribute('customer-email', email);
-    }
-  }
-
-  // Log the signer's info (visible in browser console for your records)
-  console.log('Signed:', { tier: selectedTier, name, email, timestamp: new Date().toISOString() });
-
-  document.getElementById('pay-section').style.display = 'block';
-  document.querySelectorAll('.stripe-wrap').forEach(el => el.classList.add('hidden'));
-  if (target) target.classList.remove('hidden');
-  document.getElementById('pay-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
-});
+/* ---------- INIT ---------- */
+updatePricing();
+updateClientInfo();
 </script>
 </body>
-</html>
+</html>l
