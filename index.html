@@ -5,35 +5,238 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Boostinger — Website Design & Development</title>
 <style>
-  * { box-sizing: border-box; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
   body {
-    margin: 0;
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-    background: radial-gradient(circle at 50% 20%, #1c1610 0%, #0b0b0d 60%);
-    color: #f2f2f2;
-    padding: 24px;
-    text-align: center;
+    background: #0b0b0d;
+    color: #e8e8e8;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
   }
-  .wrap { max-width: 460px; width: 100%; }
-  h1 {
-    font-size: 34px;
-    margin: 0 0 8px;
-    letter-spacing: 2px;
+  .wrap { max-width: 720px; margin: 0 auto; padding: 0 16px 60px; }
+
+  /* ---------- HEADER ---------- */
+  header {
+    text-align: center;
+    padding: 32px 16px 24px;
+    background: radial-gradient(circle at 50% 0%, #1c1610 0%, #0b0b0d 70%);
+    border-bottom: 1px solid #1e1e22;
+  }
+  header img {
+    width: 110px;
+    height: 110px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 12px;
+    box-shadow: 0 0 40px rgba(255,122,0,0.25);
+  }
+  header h1 {
+    font-size: 30px;
+    letter-spacing: 3px;
     background: linear-gradient(90deg, #f5b942, #ff7a00);
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
   }
-  .tag { color: #999; font-size: 14px; margin-bottom: 32px; }
-  p { color: #bbb; font-size: 15px; line-height: 1.6; }
+  header .tag {
+    color: #999;
+    font-size: 13px;
+    margin-top: 4px;
+    letter-spacing: 1px;
+  }
+
+  /* ---------- SECTIONS ---------- */
+  section { padding: 32px 0; border-bottom: 1px solid #1a1a1e; }
+  section:last-of-type { border-bottom: none; }
+
+  h2 {
+    font-size: 13px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #ff7a00;
+    margin-bottom: 16px;
+    text-align: center;
+  }
+
+  .hook {
+    font-size: 17px;
+    font-weight: 600;
+    color: #fff;
+    text-align: center;
+    line-height: 1.5;
+  }
+  .hook strong { color: #ff7a00; }
+
+  .sub {
+    text-align: center;
+    color: #a8a8a8;
+    font-size: 14px;
+    margin-top: 12px;
+  }
+
+  /* ---------- TIER CARDS ---------- */
+  .tiers {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .tier {
+    border: 1px solid #2a2a30;
+    border-radius: 14px;
+    padding: 20px;
+    background: #121216;
+    position: relative;
+  }
+  .tier.popular {
+    border: 2px solid #ff7a00;
+    background: linear-gradient(180deg, #1c1610 0%, #121216 100%);
+    box-shadow: 0 0 30px rgba(255,122,0,0.15);
+  }
+  .tier .badge {
+    position: absolute;
+    top: -11px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: linear-gradient(90deg, #f5b942, #ff7a00);
+    color: #0b0b0d;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+    padding: 4px 12px;
+    border-radius: 20px;
+  }
+  .tier h3 {
+    font-size: 20px;
+    letter-spacing: 2px;
+    text-align: center;
+    margin-bottom: 4px;
+  }
+  .tier.popular h3 { color: #ff7a00; }
+  .tier .price {
+    font-size: 22px;
+    font-weight: 700;
+    text-align: center;
+    color: #fff;
+  }
+  .tier .price-note {
+    text-align: center;
+    color: #888;
+    font-size: 12px;
+    margin-bottom: 14px;
+  }
+  .tier ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .tier li {
+    font-size: 13.5px;
+    color: #c8c8c8;
+    padding: 6px 0 6px 22px;
+    position: relative;
+  }
+  .tier li::before {
+    content: "●";
+    color: #ff7a00;
+    position: absolute;
+    left: 0;
+    font-size: 10px;
+    top: 10px;
+  }
+
+  .payment-note {
+    text-align: center;
+    font-size: 12.5px;
+    color: #999;
+    margin-top: 18px;
+    padding: 10px;
+    border: 1px solid #2a2a30;
+    border-radius: 8px;
+    background: #121216;
+  }
+
+  /* ---------- SEO SECTION ---------- */
+  .seo-intro {
+    text-align: center;
+    color: #c8c8c8;
+    font-size: 14px;
+    margin-bottom: 20px;
+  }
+  .seo-intro strong { color: #f5b942; }
+
+  table.seo {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  table.seo thead th {
+    background: #1c1610;
+    color: #f5b942;
+    padding: 10px 8px;
+    text-align: left;
+    font-size: 11px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    border-bottom: 1px solid #2a2a30;
+  }
+  table.seo thead th:first-child { border-top-left-radius: 10px; }
+  table.seo thead th:last-child  { border-top-right-radius: 10px; }
+  table.seo td {
+    padding: 12px 8px;
+    border-bottom: 1px solid #1e1e22;
+    color: #d8d8d8;
+    vertical-align: top;
+  }
+  table.seo tr:last-child td { border-bottom: none; }
+  table.seo td:first-child { color: #fff; font-weight: 600; }
+  table.seo td.save { color: #4ade80; font-weight: 600; font-size: 12px; }
+  table.seo tbody tr { background: #121216; }
+
+  .disclaimer {
+    font-size: 11px;
+    color: #666;
+    text-align: center;
+    margin-top: 12px;
+    font-style: italic;
+  }
+
+  /* ---------- INCLUDED SECTION ---------- */
+  .included {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px 20px;
+    margin-top: 8px;
+  }
+  .included div {
+    font-size: 13.5px;
+    color: #c8c8c8;
+    padding-left: 22px;
+    position: relative;
+  }
+  .included div::before {
+    content: "✓";
+    color: #ff7a00;
+    font-weight: 700;
+    position: absolute;
+    left: 0;
+  }
+
+  /* ---------- CTA ---------- */
+  .cta {
+    text-align: center;
+    padding: 36px 20px;
+    background: linear-gradient(180deg, #0b0b0d 0%, #1c1610 100%);
+    border-radius: 16px;
+    margin-top: 24px;
+    border: 1px solid #2a2a30;
+  }
+  .cta h2 { color: #f5b942; font-size: 18px; letter-spacing: 2px; }
+  .cta p { color: #bbb; font-size: 14px; margin: 8px 0 22px; }
   .btn {
     display: inline-block;
-    margin-top: 28px;
-    padding: 16px 28px;
+    padding: 16px 32px;
     border-radius: 10px;
     background: linear-gradient(90deg, #f5b942, #ff7a00);
     color: #0b0b0d;
@@ -43,16 +246,173 @@
     text-decoration: none;
   }
   .btn:active { opacity: 0.85; }
-  .fine { font-size: 12px; color: #666; margin-top: 28px; }
+
+  footer {
+    text-align: center;
+    padding: 32px 16px 40px;
+    color: #666;
+    font-size: 12px;
+    border-top: 1px solid #1a1a1e;
+  }
+  footer .contact {
+    color: #ff7a00;
+    font-weight: 600;
+    font-size: 13px;
+    margin-bottom: 8px;
+  }
 </style>
 </head>
 <body>
-  <div class="wrap">
-    <h1>BOOSTINGER</h1>
-    <div class="tag">Website Design &amp; Development</div>
-    <p>Ready to get started? We'll walk you through the service agreement, your package options, and secure payment — all in one place.</p>
+
+<header>
+  <img src="/logo.png" alt="Boostinger">
+  <h1>BOOSTINGER</h1>
+  <div class="tag">Website Design &amp; Development · Built for Growth</div>
+</header>
+
+<div class="wrap">
+
+  <!-- ---------- HOOK ---------- -->
+  <section>
+    <p class="hook">
+      Yet <strong>45–56%</strong> of trades businesses still have <strong>no website</strong> —
+      most competitors are invisible to <strong>4 out of 5 customers</strong>.
+    </p>
+    <p class="sub">
+      Get a conversion-ready website that looks premium, loads fast,
+      and starts generating leads — without the agency price tag.
+    </p>
+  </section>
+
+  <!-- ---------- TIERS ---------- -->
+  <section>
+    <h2>Choose Your Website Tier</h2>
+    <p class="sub" style="margin-bottom:20px;">
+      Businesses with professional websites earn <strong style="color:#f5b942;">39% more revenue</strong>.
+      Professional sites convert at 3–5% vs 1–2% for DIY/template — up to <strong style="color:#f5b942;">2.5× more leads</strong>.
+    </p>
+
+    <div class="tiers">
+
+      <div class="tier">
+        <h3>BASIC</h3>
+        <div class="price">$750 + $750</div>
+        <div class="price-note">Startup deposit + due at launch</div>
+        <ul>
+          <li>Single or simple multi-page site</li>
+          <li>Template-based professional design</li>
+          <li>Basic contact form</li>
+          <li>Mobile-responsive</li>
+          <li>7 business day delivery</li>
+        </ul>
+      </div>
+
+      <div class="tier popular">
+        <div class="badge">★ MOST POPULAR</div>
+        <h3>STANDARD</h3>
+        <div class="price">$1,499 + $1,499</div>
+        <div class="price-note">Startup deposit + due at launch</div>
+        <ul>
+          <li>Multi-page custom design</li>
+          <li>Contact / lead capture forms</li>
+          <li>Integrations (maps, social, booking)</li>
+          <li>Mobile-responsive &amp; SEO-ready</li>
+          <li>7 business day delivery</li>
+        </ul>
+      </div>
+
+      <div class="tier">
+        <h3>PREMIUM</h3>
+        <div class="price">$2,499 + $2,499</div>
+        <div class="price-note">Startup deposit + due at launch</div>
+        <ul>
+          <li>Advanced custom functionality</li>
+          <li>E-commerce or complex integrations</li>
+          <li>Bespoke design + API / embeds</li>
+          <li>Priority support during build</li>
+          <li>14 business day delivery</li>
+        </ul>
+      </div>
+
+    </div>
+
+    <div class="payment-note">
+      50% deposit at signing · 50% due before launch<br>
+      Cash · Card (Stripe) · Check · Wire
+    </div>
+  </section>
+
+  <!-- ---------- BOOSTEDSEO ---------- -->
+  <section>
+    <h2>Upgrade with BoostedSEO — Grow Faster</h2>
+    <p class="seo-intro">
+      Every $1 spent on SEO returns <strong>$19.90 in revenue</strong> — nearly 5× higher than the
+      $4.40 return from paid ads. Organic leads also close at <strong>14.6%</strong> vs 1.7% for cold outreach.
+    </p>
+
+    <table class="seo">
+      <thead>
+        <tr>
+          <th>Plan</th>
+          <th>Base Maint.</th>
+          <th>With BoostedSEO</th>
+          <th>You Save</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Basic</td>
+          <td>$75 / mo</td>
+          <td>$300 / mo</td>
+          <td class="save">$25/mo<br>$300/yr</td>
+        </tr>
+        <tr>
+          <td>Standard</td>
+          <td>$150 / mo</td>
+          <td>$365 / mo</td>
+          <td class="save">$35/mo<br>$420/yr</td>
+        </tr>
+        <tr>
+          <td>Premium</td>
+          <td>$300 / mo</td>
+          <td>$500 / mo</td>
+          <td class="save">$50/mo<br>$600/yr</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p class="disclaimer">
+      Subject to competition &amp; market conditions. No specific rankings or outcomes guaranteed.
+    </p>
+  </section>
+
+  <!-- ---------- WHAT'S INCLUDED ---------- -->
+  <section>
+    <h2>Every Monthly Plan Includes</h2>
+    <div class="included">
+      <div>Reliable website hosting</div>
+      <div>Minor content updates (under 15 min)</div>
+      <div>Routine security updates &amp; monitoring</div>
+      <div>Uptime monitoring &amp; regular backups</div>
+    </div>
+  </section>
+
+  <!-- ---------- CTA ---------- -->
+  <div class="cta">
+    <h2>READY TO LAUNCH?</h2>
+    <p>Choose your tier, lock in your deposit, and we'll start building within days.</p>
     <a class="btn" href="/Pay">Start Your Project →</a>
-    <p class="fine">Questions? getboostinger@gmail.com · (951) 428-1407</p>
   </div>
+
+</div>
+
+<footer>
+  <div class="contact">
+    (951) 428-1407 · getboostinger@gmail.com
+  </div>
+  Boostinger · Website Design &amp; Development · California<br>
+  Pricing subject to project scope (see Exhibit A)
+</footer>
+
 </body>
 </html>
