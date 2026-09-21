@@ -16,54 +16,19 @@
   }
   .wrap { max-width: 760px; margin: 0 auto; padding: 0 18px 60px; }
 
-  /* ---------- HEADER ---------- */
+  /* ---------- HEADER BANNER ---------- */
   header {
-    position: relative;
-    text-align: center;
-    padding: 60px 16px 50px;
-    background: radial-gradient(circle at 50% 50%, #1c1610 0%, #0b0b0d 70%);
+    width: 100%;
+    background: #0b0b0d;
     border-bottom: 1px solid #1e1e22;
-    overflow: hidden;
+    display: flex;
+    justify-content: center;
   }
-  /* Giant logo watermark behind text */
-  header .logo-bg {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 340px;
-    height: 340px;
-    opacity: 0.22;
-    filter: blur(0.4px);
-    pointer-events: none;
-    z-index: 0;
-    animation: slow-spin 40s linear infinite;
-  }
-  @keyframes slow-spin {
-    from { transform: translate(-50%, -50%) rotate(0deg); }
-    to   { transform: translate(-50%, -50%) rotate(360deg); }
-  }
-  header .inner {
-    position: relative;
-    z-index: 1;
-  }
-  header h1 {
-    font-size: 52px;
-    letter-spacing: 6px;
-    font-weight: 900;
-    background: linear-gradient(90deg, #f5b942, #ff7a00);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-    text-shadow: 0 0 60px rgba(255,122,0,0.35);
-    line-height: 1.1;
-  }
-  header .tag {
-    color: #ccc;
-    font-size: 16px;
-    margin-top: 12px;
-    letter-spacing: 2px;
-    font-weight: 500;
+  .hero-banner {
+    display: block;
+    width: 100%;
+    max-width: 1000px;
+    height: auto;
   }
 
   /* ---------- SECTIONS ---------- */
@@ -97,11 +62,7 @@
   }
 
   /* ---------- TIER CARDS ---------- */
-  .tiers {
-    display: flex;
-    flex-direction: column;
-    gap: 18px;
-  }
+  .tiers { display: flex; flex-direction: column; gap: 18px; }
   .tier {
     border: 1px solid #2a2a30;
     border-radius: 16px;
@@ -148,11 +109,7 @@
     font-size: 14px;
     margin-bottom: 18px;
   }
-  .tier ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-  }
+  .tier ul { list-style: none; padding: 0; margin: 0; }
   .tier li {
     font-size: 16px;
     color: #d0d0d0;
@@ -287,11 +244,7 @@
     margin-bottom: 10px;
   }
 
-  /* ---------- SMALL SCREENS ---------- */
-  @media (max-width: 400px) {
-    header h1 { font-size: 42px; letter-spacing: 4px; }
-    header .logo-bg { width: 280px; height: 280px; }
-    .tier .price { font-size: 24px; }
+  @media (max-width: 500px) {
     .included { grid-template-columns: 1fr; }
   }
 </style>
@@ -299,11 +252,7 @@
 <body>
 
 <header>
-  <img class="logo-bg" src="/logo.png" alt="">
-  <div class="inner">
-    <h1>BOOSTINGER</h1>
-    <div class="tag">Website Design &amp; Development · Built for Growth</div>
-  </div>
+  <img class="hero-banner" src="/banner.png" alt="Boostinger">
 </header>
 
 <div class="wrap">
@@ -327,7 +276,6 @@
     </p>
 
     <div class="tiers">
-
       <div class="tier">
         <h3>BASIC</h3>
         <div class="price">$750 + $750</div>
@@ -367,7 +315,6 @@
           <li>14 business day delivery</li>
         </ul>
       </div>
-
     </div>
 
     <div class="payment-note">
