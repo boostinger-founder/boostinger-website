@@ -17,7 +17,7 @@
   .wrap { max-width: 760px; margin: 0 auto; padding: 0 18px 60px; }
 
   /* ---------- HEADER BANNER ---------- */
-  header {
+  header.banner {
     width: 100%;
     background: #0b0b0d;
     border-bottom: 1px solid #1e1e22;
@@ -25,6 +25,50 @@
     justify-content: center;
   }
   .hero-banner { display: block; width: 100%; max-width: 1000px; height: auto; }
+
+  /* ---------- NAV BAR ---------- */
+  nav.main-nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(11, 11, 13, 0.92);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-bottom: 1px solid #2a2a30;
+    display: flex;
+    justify-content: center;
+    gap: 6px;
+    padding: 10px 12px;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+  nav.main-nav a {
+    display: inline-block;
+    padding: 9px 18px;
+    border-radius: 999px;
+    color: #d0d0d0;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    border: 1px solid transparent;
+    transition: all 0.15s ease;
+  }
+  nav.main-nav a:active { opacity: 0.7; }
+  nav.main-nav a:hover,
+  nav.main-nav a.active {
+    color: #ff7a00;
+    border-color: #2a2a30;
+    background: #121216;
+  }
+  nav.main-nav a.buy {
+    background: linear-gradient(90deg, #f5b942, #ff7a00);
+    color: #0b0b0d;
+    border-color: transparent;
+  }
+  nav.main-nav a.buy:hover,
+  nav.main-nav a.buy:active { opacity: 0.9; }
 
   /* ---------- SECTIONS ---------- */
   section { padding: 42px 0; border-bottom: 1px solid #1a1a1e; }
@@ -261,7 +305,6 @@
     font-size: 11px;
     top: 13px;
   }
-  /* Tier button */
   .tier-btn {
     display: block;
     width: 100%;
@@ -437,18 +480,24 @@
     .stat .num { font-size: 24px; }
     .stat .lbl { font-size: 12px; }
     .roi-hero .big { font-size: 40px; }
+    nav.main-nav a { padding: 8px 14px; font-size: 12px; }
   }
 </style>
 </head>
 <body>
 
-<header>
+<header class="banner">
   <img class="hero-banner" src="/banner.png" alt="Boostinger">
 </header>
 
+<nav class="main-nav">
+  <a href="/" class="active">Home</a>
+  <a href="/blog">Blog</a>
+  <a href="/Pay" class="buy">Buy Now</a>
+</nav>
+
 <div class="wrap">
 
-  <!-- ============ WHY YOU NEED A WEBSITE ============ -->
   <section>
     <h2>Why Local Trade Businesses Need a Website</h2>
     <p class="hook">
@@ -477,7 +526,6 @@
     </p>
   </section>
 
-  <!-- ============ WITHOUT A WEBSITE ============ -->
   <section>
     <h2>Without a Website, You Are Invisible</h2>
     <p class="sub">
@@ -501,7 +549,6 @@
     </div>
   </section>
 
-  <!-- ============ ROI ============ -->
   <section>
     <h2>The ROI of Going Online</h2>
 
@@ -537,7 +584,6 @@
     <p class="disclaimer">These ROI ranges reflect real-world performance across local service industries.</p>
   </section>
 
-  <!-- ============ BOOSTEDSEO BENEFITS ============ -->
   <section>
     <h2>How BoostedSEO Amplifies Growth</h2>
     <p class="seo-intro">
@@ -573,7 +619,6 @@
     </div>
   </section>
 
-  <!-- ============ TIERS ============ -->
   <section>
     <h2>We Offer 3 Package Tiers</h2>
     <p class="sub" style="margin-bottom:26px;">
@@ -593,7 +638,7 @@
           <li>Mobile-responsive</li>
           <li>7 business day delivery</li>
         </ul>
-        <a class="tier-btn" href="/Pay">START WITH BASIC →</a>
+        <a class="tier-btn" href="/Pay?tier=basic">START WITH BASIC →</a>
       </div>
 
       <div class="tier popular">
@@ -608,7 +653,7 @@
           <li>Mobile-responsive &amp; SEO-ready</li>
           <li>7 business day delivery</li>
         </ul>
-        <a class="tier-btn" href="/Pay">START WITH STANDARD →</a>
+        <a class="tier-btn" href="/Pay?tier=standard">START WITH STANDARD →</a>
       </div>
 
       <div class="tier">
@@ -622,7 +667,7 @@
           <li>Priority support during build</li>
           <li>14 business day delivery</li>
         </ul>
-        <a class="tier-btn" href="/Pay">START WITH PREMIUM →</a>
+        <a class="tier-btn" href="/Pay?tier=premium">START WITH PREMIUM →</a>
       </div>
     </div>
 
@@ -632,7 +677,6 @@
     </div>
   </section>
 
-  <!-- ============ BOOSTEDSEO BUNDLE ============ -->
   <section>
     <h2>Upgrade with BoostedSEO — Grow Faster</h2>
     <p class="seo-intro">
@@ -665,7 +709,6 @@
     </p>
   </section>
 
-  <!-- ============ EVERY MONTHLY PLAN ============ -->
   <section>
     <h2>Every Monthly Plan Includes</h2>
     <div class="included">
@@ -676,7 +719,6 @@
     </div>
   </section>
 
-  <!-- ============ BOTTOM LINE ============ -->
   <section>
     <h2>The Bottom Line</h2>
     <div class="bottom-line">
@@ -691,7 +733,6 @@
     </div>
   </section>
 
-  <!-- ============ CTA ============ -->
   <div class="cta">
     <h2>READY TO STOP LOSING JOBS?</h2>
     <p>Choose your tier, lock in your deposit, and we'll start building within days.</p>
