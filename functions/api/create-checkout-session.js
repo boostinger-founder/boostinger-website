@@ -1,5 +1,6 @@
 // =============================================
 // BACKEND: Creates a Stripe Embedded Checkout session
+// Also stashes the signature in KV for the webhook to pick up
 // File location: /functions/api/create-checkout-session.js
 // =============================================
 
@@ -26,10 +27,16 @@ const PRICES = {
 export async function onRequestPost({ request, env }) {
   try {
     const body = await request.json();
-    const { tier, boost, businessName, clientName, clientEmail, clientPhone, clientAddress, signature } = body;
+    const {
+      tier, boost, businessName, clientName, clientEmail,
+      clientPhone, clientAddress, signature
+    } = body;
 
     if (!PRICES[tier]) {
-      return new Response(JSON.stringify({ error: 'Invalid tier' }), { status: 400 });
+      return new Response(JSON.stringify({ error: 'Invalid tier' }), {
+        status: 400,
+        headers: { 'Content-Type': 'application/json' }
+      });
     }
 
     const plan = PRICES[tier];
@@ -70,12 +77,31 @@ export async function onRequestPost({ request, env }) {
         tier,
         boost: boost ? 'yes' : 'no',
         businessName: businessName || '',
-        clientName: clientName || '',
-        clientPhone: clientPhone || '',
-        clientAddress: clientAddress || '',
-        hasSignature: signature ? 'yes' : 'no'
+        clientName: clientName || ''
       },
       return_url: `${env.SITE_URL}/Pay?paid=1&session_id={CHECKOUT_SESSION_ID}`,
+    });
+
+    // Store the full signature + client info in KV, keyed by the Stripe session ID.
+    // The webhook will fetch this once payment succeeds. Auto-expires in 24 hours.
+    const signatureData = {
+      tier,
+      boost: boost ? 'yes' : 'no',
+      businessName: businessName || '',
+      clientName: clientName || '',
+      clientEmail: clientEmail || '',
+      clientPhone: clientPhone || '',
+      clientAddress: clientAddress || '',
+      signature: signature || '',
+      planLabel: plan.label,
+      deposit: pricing.deposit,
+      monthly: pricing.monthly,
+      total: pricing.total,
+      createdAt: new Date().toISOString()
+    };
+
+    await env.CLIENT_SIGNATURES.put(session.id, JSON.stringify(signatureData), {
+      expirationTtl: 86400 // 24 hours
     });
 
     return new Response(
@@ -90,4 +116,4 @@ export async function onRequestPost({ request, env }) {
       { status: 500, headers: { 'Content-Type': 'application/json' } }
     );
   }
-      }
+}
