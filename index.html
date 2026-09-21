@@ -81,18 +81,10 @@
     line-height: 1;
     margin-bottom: 8px;
   }
-  .stat .lbl {
-    font-size: 13px;
-    color: #c8c8c8;
-    line-height: 1.35;
-  }
+  .stat .lbl { font-size: 13px; color: #c8c8c8; line-height: 1.35; }
 
   /* ---------- INVISIBLE / LOSS LIST ---------- */
-  .loss-list {
-    list-style: none;
-    padding: 0;
-    margin: 20px 0 0;
-  }
+  .loss-list { list-style: none; padding: 0; margin: 20px 0 0; }
   .loss-list li {
     padding: 12px 0 12px 34px;
     position: relative;
@@ -149,18 +141,10 @@
     color: transparent;
     line-height: 1;
   }
-  .roi-hero .note {
-    color: #b8b8b8;
-    font-size: 15px;
-    margin-top: 14px;
-  }
+  .roi-hero .note { color: #b8b8b8; font-size: 15px; margin-top: 14px; }
 
   /* ---------- WHY ROI ---------- */
-  .why-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-  }
+  .why-list { list-style: none; padding: 0; margin: 0; }
   .why-list li {
     padding: 10px 0 10px 30px;
     position: relative;
@@ -221,17 +205,8 @@
     border-radius: 12px;
     padding: 18px;
   }
-  .boost-card h4 {
-    color: #ff7a00;
-    font-size: 15px;
-    margin-bottom: 6px;
-    letter-spacing: 0.5px;
-  }
-  .boost-card p {
-    color: #c8c8c8;
-    font-size: 14px;
-    line-height: 1.5;
-  }
+  .boost-card h4 { color: #ff7a00; font-size: 15px; margin-bottom: 6px; letter-spacing: 0.5px; }
+  .boost-card p { color: #c8c8c8; font-size: 14px; line-height: 1.5; }
 
   /* ---------- TIER CARDS ---------- */
   .tiers { display: flex; flex-direction: column; gap: 18px; }
@@ -269,18 +244,8 @@
     font-weight: 800;
   }
   .tier.popular h3 { color: #ff7a00; }
-  .tier .price {
-    font-size: 28px;
-    font-weight: 800;
-    text-align: center;
-    color: #fff;
-  }
-  .tier .price-note {
-    text-align: center;
-    color: #999;
-    font-size: 14px;
-    margin-bottom: 18px;
-  }
+  .tier .price { font-size: 28px; font-weight: 800; text-align: center; color: #fff; }
+  .tier .price-note { text-align: center; color: #999; font-size: 14px; margin-bottom: 18px; }
   .tier ul { list-style: none; padding: 0; margin: 0; }
   .tier li {
     font-size: 16px;
@@ -295,6 +260,28 @@
     left: 0;
     font-size: 11px;
     top: 13px;
+  }
+  /* Tier button */
+  .tier-btn {
+    display: block;
+    width: 100%;
+    margin-top: 20px;
+    padding: 14px;
+    border-radius: 10px;
+    background: transparent;
+    border: 2px solid #ff7a00;
+    color: #ff7a00;
+    font-size: 15px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    text-align: center;
+    text-decoration: none;
+  }
+  .tier-btn:active { opacity: 0.7; }
+  .tier.popular .tier-btn {
+    background: linear-gradient(90deg, #f5b942, #ff7a00);
+    color: #0b0b0d;
+    border-color: transparent;
   }
 
   .payment-note {
@@ -393,11 +380,7 @@
     text-align: center;
     margin-bottom: 18px;
   }
-  .bottom-line ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-  }
+  .bottom-line ul { list-style: none; padding: 0; margin: 0; }
   .bottom-line li {
     padding: 9px 0 9px 30px;
     position: relative;
@@ -445,18 +428,8 @@
     border-top: 1px solid #1a1a1e;
     line-height: 1.8;
   }
-  footer .contact {
-    color: #ff7a00;
-    font-weight: 700;
-    font-size: 15px;
-    margin-bottom: 10px;
-  }
-  footer .tagline {
-    color: #f5b942;
-    font-weight: 600;
-    font-style: italic;
-    margin-bottom: 10px;
-  }
+  footer .contact { color: #ff7a00; font-weight: 700; font-size: 15px; margin-bottom: 10px; }
+  footer .tagline { color: #f5b942; font-weight: 600; font-style: italic; margin-bottom: 10px; }
 
   @media (max-width: 500px) {
     .included { grid-template-columns: 1fr; }
@@ -602,7 +575,7 @@
 
   <!-- ============ TIERS ============ -->
   <section>
-    <h2>Choose Your Website Tier</h2>
+    <h2>We Offer 3 Package Tiers</h2>
     <p class="sub" style="margin-bottom:26px;">
       Businesses with professional websites earn <strong>39% more revenue</strong>.
       Professional sites convert at 3–5% vs 1–2% for DIY/template — up to <strong>2.5× more leads</strong>.
@@ -620,6 +593,7 @@
           <li>Mobile-responsive</li>
           <li>7 business day delivery</li>
         </ul>
+        <a class="tier-btn" href="/Pay">START WITH BASIC →</a>
       </div>
 
       <div class="tier popular">
@@ -634,6 +608,7 @@
           <li>Mobile-responsive &amp; SEO-ready</li>
           <li>7 business day delivery</li>
         </ul>
+        <a class="tier-btn" href="/Pay">START WITH STANDARD →</a>
       </div>
 
       <div class="tier">
@@ -647,6 +622,7 @@
           <li>Priority support during build</li>
           <li>14 business day delivery</li>
         </ul>
+        <a class="tier-btn" href="/Pay">START WITH PREMIUM →</a>
       </div>
     </div>
 
