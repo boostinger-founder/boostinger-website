@@ -13,7 +13,8 @@
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     background: #0b0b0d;
     color: #f2f2f2;
-    line-height: 1.5;
+    line-height: 1.55;
+    font-size: 16px;
     padding: 16px;
     max-width: 720px;
     margin: 0 auto;
@@ -29,18 +30,18 @@
     display: flex;
     justify-content: center;
     gap: 6px;
-    padding: 10px 12px;
-    margin: -16px -16px 16px;
+    padding: 12px 12px;
+    margin: -16px -16px 18px;
     overflow-x: auto;
     white-space: nowrap;
   }
   nav.main-nav a {
     display: inline-block;
-    padding: 9px 18px;
+    padding: 10px 20px;
     border-radius: 999px;
     color: #d0d0d0;
     text-decoration: none;
-    font-size: 14px;
+    font-size: 17px;
     font-weight: 700;
     letter-spacing: 1px;
     text-transform: uppercase;
@@ -57,34 +58,34 @@
     color: #0b0b0d;
     border-color: transparent;
   }
-  header { text-align: center; padding: 16px 0 8px; }
+  header { text-align: center; padding: 18px 0 10px; }
   header h1 {
     margin: 0;
-    font-size: 26px;
+    font-size: 31px;
     letter-spacing: 1px;
     background: linear-gradient(90deg, #f5b942, #ff7a00);
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
   }
-  header p { color: #999; margin: 4px 0 0; font-size: 13px; }
+  header p { color: #aaa; margin: 6px 0 0; font-size: 16px; }
   h2 {
-    font-size: 16px;
-    margin: 28px 0 10px;
+    font-size: 19px;
+    margin: 32px 0 12px;
     color: #ff7a00;
     text-transform: uppercase;
     letter-spacing: 1px;
   }
-  label { display: block; font-size: 14px; margin-bottom: 4px; color: #ccc; }
+  label { display: block; font-size: 17px; margin-bottom: 5px; color: #ccc; }
   input[type="text"], input[type="email"], input[type="tel"] {
     width: 100%;
-    padding: 10px;
-    margin-bottom: 12px;
+    padding: 13px;
+    margin-bottom: 14px;
     border-radius: 8px;
     border: 1px solid #333;
     background: #151518;
     color: #fff;
-    font-size: 15px;
+    font-size: 18px;
   }
   input[type="text"]:focus, input[type="email"]:focus, input[type="tel"]:focus {
     outline: none;
@@ -93,42 +94,43 @@
   .tier-row, .boost-row {
     display: flex;
     align-items: center;
-    gap: 10px;
-    padding: 12px;
-    margin-bottom: 8px;
+    gap: 12px;
+    padding: 14px;
+    margin-bottom: 10px;
     border: 1px solid #333;
     border-radius: 10px;
     background: #151518;
     cursor: pointer;
   }
-  .tier-row input, .boost-row input { accent-color: #ff7a00; width: 18px; height: 18px; }
+  .tier-row input, .boost-row input { accent-color: #ff7a00; width: 22px; height: 22px; flex-shrink: 0; }
   .tier-row.selected, .boost-row.selected { border-color: #ff7a00; background: #1c1610; }
-  .tier-name { font-weight: 600; }
-  .tier-desc { font-size: 12px; color: #999; }
+  .tier-name { font-weight: 600; font-size: 18px; display: block; }
+  .tier-desc { font-size: 14px; color: #999; display: block; margin-top: 2px; }
   .agreement {
-    max-height: 340px;
+    max-height: 360px;
     overflow-y: auto;
-    padding: 16px;
+    padding: 18px;
     border: 1px solid #333;
     border-radius: 10px;
     background: #111114;
-    font-size: 13px;
+    font-size: 16px;
     color: #ccc;
+    line-height: 1.6;
   }
-  .agreement h3 { color: #f5b942; font-size: 14px; margin: 18px 0 6px; }
+  .agreement h3 { color: #f5b942; font-size: 17px; margin: 20px 0 8px; }
   .agreement h3:first-child { margin-top: 0; }
-  .agreement p { margin: 6px 0; }
-  .agreement ul { margin: 6px 0 6px 18px; padding: 0; }
-  .agreement li { margin: 3px 0; }
+  .agreement p { margin: 8px 0; }
+  .agreement ul { margin: 8px 0 8px 20px; padding: 0; }
+  .agreement li { margin: 4px 0; }
   .exhibit {
     width: 100%;
     border-collapse: collapse;
-    margin-top: 10px;
-    font-size: 12px;
+    margin-top: 12px;
+    font-size: 14px;
   }
   .exhibit td {
     border: 1px solid #333;
-    padding: 6px 8px;
+    padding: 8px 10px;
   }
   .exhibit td:first-child { color: #999; width: 45%; }
   .exhibit td:last-child { color: #fff; font-weight: 600; }
@@ -141,7 +143,7 @@
   }
   #signature-pad {
     width: 100%;
-    height: 180px;
+    height: 200px;
     display: block;
     touch-action: none;
   }
@@ -151,65 +153,80 @@
     left: 50%;
     transform: translate(-50%, -50%);
     color: #bbb;
-    font-size: 14px;
+    font-size: 17px;
     pointer-events: none;
   }
   .sig-actions {
     display: flex;
     justify-content: flex-end;
-    margin-top: 6px;
+    margin-top: 8px;
   }
   .sig-actions button {
     background: none;
     border: 1px solid #444;
     color: #aaa;
-    padding: 6px 12px;
+    padding: 8px 16px;
     border-radius: 6px;
-    font-size: 12px;
+    font-size: 15px;
     cursor: pointer;
   }
   .consent {
     display: flex;
-    gap: 10px;
+    gap: 12px;
     align-items: flex-start;
-    margin-top: 16px;
-    font-size: 13px;
+    margin-top: 18px;
+    font-size: 16px;
     color: #bbb;
+    line-height: 1.55;
   }
-  .consent input { margin-top: 3px; accent-color: #ff7a00; width: 18px; height: 18px; }
+  .consent input { margin-top: 4px; accent-color: #ff7a00; width: 22px; height: 22px; flex-shrink: 0; }
   .total-bar {
     position: sticky;
     bottom: 0;
     background: linear-gradient(90deg, #1c1610, #0b0b0d);
     border-top: 1px solid #ff7a00;
-    padding: 12px 16px;
-    margin: 24px -16px 0;
+    padding: 14px 16px;
+    margin: 26px -16px 0;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    font-size: 15px;
+    font-size: 18px;
   }
-  .total-bar .amt { font-size: 22px; font-weight: 700; color: #ff7a00; }
+  .total-bar .amt { font-size: 26px; font-weight: 700; color: #ff7a00; }
   .pay-btn {
     display: block;
     width: 100%;
-    padding: 16px;
-    margin-top: 16px;
+    padding: 18px;
+    margin-top: 18px;
     border: none;
     border-radius: 10px;
     background: linear-gradient(90deg, #f5b942, #ff7a00);
     color: #0b0b0d;
-    font-size: 17px;
+    font-size: 20px;
     font-weight: 700;
     letter-spacing: 0.5px;
     cursor: pointer;
   }
   .pay-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+  .fine { font-size: 13px; color: #666; margin-top: 20px; text-align: center; }
+  .bank-note {
+    margin-top: 18px;
+    padding: 14px 16px;
+    background: #121216;
+    border: 1px solid #2a2a30;
+    border-left: 3px solid #f5b942;
+    border-radius: 8px;
+    font-size: 14px;
+    color: #b8b8b8;
+    line-height: 1.6;
+  }
+  .bank-note strong { color: #f5b942; }
   #step-pay { display: none; }
   #checkout { margin-top: 20px; }
   .success { text-align: center; padding: 60px 20px; }
-  .success h1 { color: #ff7a00; }
-  .fine { font-size: 11px; color: #666; margin-top: 20px; text-align: center; }
+  .success h1 { color: #ff7a00; font-size: 32px; }
+  .success p { font-size: 18px; }
+  .success .fine { font-size: 13px; color: #666; margin-top: 20px; }
 </style>
 </head>
 <body>
@@ -377,7 +394,7 @@
       <tr><td>Target Delivery Date</td><td>7 business days from signing</td></tr>
       <tr><td>Effective Date</td><td id="exDate">—</td></tr>
     </table>
-    <p style="font-size:11px;color:#888;margin-top:10px;">
+    <p style="font-size:13px;color:#999;margin-top:12px;">
       <strong>FIRST CLIENT FOUNDER'S PROMOTION (One-Time Offer):</strong>
       Project Fee discounts reflected above. If BoostedSEO Add-On is selected, the bundled monthly rate is discounted for the first 6 months, after which it reverts to the standard bundled rate. This offer is exclusive to this Client and this Agreement only. Developer reserves the right to withdraw this offer if the project is paused or canceled.
     </p>
@@ -408,6 +425,10 @@
 
   <button class="pay-btn" id="submitBtn">Sign &amp; Continue to Payment</button>
   <p class="fine">Payments are securely processed by Stripe.</p>
+
+  <div class="bank-note">
+    <strong>Heads up:</strong> If your bank asks you to verify a one-time code and the code box won't accept typing, try <strong>rotating your phone to landscape</strong> or <strong>switching browsers</strong>. This is a standard bank security check, not a problem with your order.
+  </div>
 
 </div>
 
