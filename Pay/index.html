@@ -140,6 +140,10 @@
     border-radius: 10px;
     overflow: hidden;
     margin-top: 8px;
+    touch-action: none;
+    -webkit-user-select: none;
+    user-select: none;
+    -webkit-touch-callout: none;
   }
   #signature-pad {
     width: 100%;
@@ -500,15 +504,30 @@ const signaturePad = new SignaturePad(canvas, {
   penColor: '#111'
 });
 
-function resizeCanvas() {
+function setupCanvas() {
   const ratio = Math.max(window.devicePixelRatio || 1, 1);
+  const currentData = signaturePad.toData();
   canvas.width  = canvas.offsetWidth  * ratio;
   canvas.height = canvas.offsetHeight * ratio;
   canvas.getContext('2d').scale(ratio, ratio);
-  signaturePad.clear();
+  if (currentData && currentData.length) {
+    signaturePad.fromData(currentData);
+  }
 }
-window.addEventListener('resize', resizeCanvas);
-resizeCanvas();
+
+// Set up exactly once on load — do NOT listen to window resize,
+// because mobile browsers fire resize on every scroll (address bar hide/show)
+// which was wiping the signature.
+setupCanvas();
+
+// Prevent the page from scrolling while actively drawing on the canvas
+canvas.addEventListener('touchstart', (e) => e.preventDefault(), { passive: false });
+canvas.addEventListener('touchmove',  (e) => e.preventDefault(), { passive: false });
+
+// Only re-setup if the device actually rotates (rare, and we restore the ink)
+window.addEventListener('orientationchange', () => {
+  setTimeout(setupCanvas, 300);
+});
 
 signaturePad.addEventListener('beginStroke', () => { sigHint.style.display = 'none'; });
 
