@@ -72,6 +72,14 @@ export async function onRequestPost(context) {
     // Support both { event, article } and flat article shapes
     const article = payload.article || payload;
     const event = payload.event || "article.published";
+    
+// Handle test events — return success without storing anything
+if (event === "test") {
+  return new Response(JSON.stringify({ url: "https://boostinger.pages.dev/test" }), {
+    status: 200,
+    headers: { "Content-Type": "application/json" },
+  });
+}
 
     if (!article || !article.id) {
       return new Response(JSON.stringify({ error: "Missing article.id" }), {
