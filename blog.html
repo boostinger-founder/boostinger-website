@@ -1,124 +1,118 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Boostinger Blog</title>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
-    <style>
-        /* Copy the same styles from index.html here */
-        /* Or use the same styling for consistency */
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            font-family: 'Montserrat', sans-serif;
-            background-color: #0a0a0a;
-            color: #ffffff;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            min-height: 100vh;
-            padding: 2rem;
-            background-image: radial-gradient(circle at center, #1a1a1a 0%, #000000 100%);
-        }
-        .container {
-            max-width: 800px;
-            width: 100%;
-            margin: 2rem auto;
-        }
-        h1 {
-            font-size: 2.5rem;
-            background: linear-gradient(135deg, #ffffff 0%, #ff8c00 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            text-transform: uppercase;
-            margin-bottom: 2rem;
-        }
-        .blog-post {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 102, 0, 0.15);
-            border-radius: 12px;
-            padding: 1.5rem;
-            margin-bottom: 1.5rem;
-            text-align: left;
-            transition: transform 0.3s ease;
-        }
-        .blog-post:hover {
-            transform: translateY(-3px);
-        }
-        .blog-post h2 {
-            color: #ff8c00;
-            font-size: 1.3rem;
-            margin-bottom: 0.5rem;
-        }
-        .blog-post .date {
-            color: #666;
-            font-size: 0.8rem;
-            margin-bottom: 0.8rem;
-        }
-        .blog-post p {
-            color: #b0b0b0;
-            line-height: 1.6;
-        }
-        .blog-post a {
-            color: #ff8c00;
-            text-decoration: none;
-            font-weight: 600;
-        }
-        .blog-post a:hover {
-            text-decoration: underline;
-        }
-        .back-link {
-            display: inline-block;
-            margin-top: 2rem;
-            color: #ff8c00;
-            text-decoration: none;
-            font-weight: 600;
-        }
-        .back-link:hover {
-            text-decoration: underline;
-        }
-        footer {
-            margin-top: 3rem;
-            font-size: 0.8rem;
-            color: #444;
-            letter-spacing: 1px;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Boostinger — Blog</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+         background: #0b0b0d; color: #e8e8e8; line-height: 1.7; font-size: 17px; }
+  .wrap { max-width: 760px; margin: 0 auto; padding: 0 18px 60px; }
+  nav.main-nav { position: sticky; top: 0; z-index: 100;
+    background: rgba(11,11,13,0.92); backdrop-filter: blur(10px);
+    border-bottom: 1px solid #2a2a30;
+    display: flex; justify-content: center; gap: 6px; padding: 10px 12px;
+    overflow-x: auto; white-space: nowrap; }
+  nav.main-nav a { display: inline-block; padding: 9px 18px;
+    border-radius: 999px; color: #d0d0d0; text-decoration: none;
+    font-size: 14px; font-weight: 700; letter-spacing: 1px;
+    text-transform: uppercase; border: 1px solid transparent; }
+  nav.main-nav a.active { color: #ff7a00; border-color: #2a2a30;
+    background: #121216; }
+  nav.main-nav a.buy { background: linear-gradient(90deg,#f5b942,#ff7a00);
+    color: #0b0b0d; border-color: transparent; }
+  header.blog-head { text-align: center; padding: 40px 18px 24px; }
+  header.blog-head h1 { font-size: 34px; letter-spacing: 2px;
+    background: linear-gradient(90deg,#f5b942,#ff7a00);
+    -webkit-background-clip: text; background-clip: text;
+    color: transparent; margin-bottom: 8px; }
+  header.blog-head p { color: #999; font-size: 16px; }
+  .post-list { display: flex; flex-direction: column; gap: 16px; margin-top: 8px; }
+  .post-card { display: block; background: #121216;
+    border: 1px solid #2a2a30; border-radius: 14px; padding: 22px;
+    text-decoration: none; color: inherit; }
+  .post-card:active { border-color: #ff7a00; }
+  .post-card .meta { color: #888; font-size: 13px; letter-spacing: 1px;
+    text-transform: uppercase; margin-bottom: 6px; }
+  .post-card h2 { color: #fff; font-size: 22px; margin-bottom: 8px;
+    line-height: 1.3; }
+  .post-card .excerpt { color: #b8b8b8; font-size: 15.5px; line-height: 1.55; }
+  .post-card .read-more { display: inline-block; margin-top: 12px;
+    color: #ff7a00; font-size: 14px; font-weight: 700;
+    letter-spacing: 0.5px; }
+  .loading, .empty { text-align: center; color: #888;
+    padding: 60px 20px; font-size: 16px; }
+  footer { text-align: center; padding: 36px 16px 44px; color: #777;
+    font-size: 14px; border-top: 1px solid #1a1a1e; line-height: 1.8;
+    margin-top: 60px; }
+  footer .contact { color: #ff7a00; font-weight: 700; font-size: 15px;
+    margin-bottom: 10px; }
+</style>
 </head>
 <body>
-    <div class="container">
-        <h1>📝 Boostinger Blog</h1>
 
-        <!-- Blog Post 1 -->
-        <div class="blog-post">
-            <h2>5 Reasons Your Business Needs a Website in 2026</h2>
-            <div class="date">September 2, 2026</div>
-            <p>In today's digital-first world, having a website isn't optional—it's essential. Here's why your business needs to be online...</p>
-            <a href="#">Read More →</a>
-        </div>
+<nav class="main-nav">
+  <a href="/">Home</a>
+  <a href="/blog.html" class="active">Blog</a>
+  <a href="/Pay" class="buy">Buy Now</a>
+</nav>
 
-        <!-- Blog Post 2 -->
-        <div class="blog-post">
-            <h2>How AI-Powered SEO Transforms Your Traffic</h2>
-            <div class="date">August 28, 2026</div>
-            <p>Discover how artificial intelligence is revolutionizing search engine optimization and helping businesses grow faster than ever...</p>
-            <a href="#">Read More →</a>
-        </div>
+<div class="wrap">
+  <header class="blog-head">
+    <h1>BOOSTINGER BLOG</h1>
+    <p>Insights on websites, SEO, and growing local trade businesses.</p>
+  </header>
+  <div id="posts" class="post-list">
+    <div class="loading">Loading posts…</div>
+  </div>
+</div>
 
-        <!-- Blog Post 3 -->
-        <div class="blog-post">
-            <h2>Choosing the Right Web Design Tier for Your Business</h2>
-            <div class="date">August 20, 2026</div>
-            <p>Not sure whether you need Basic, Standard, or Premium? Here's a breakdown to help you decide...</p>
-            <a href="#">Read More →</a>
-        </div>
+<footer>
+  <div class="contact">(951) 428-1407 · getboostinger@gmail.com</div>
+  Boostinger · Website Design &amp; Development · California
+</footer>
 
-        <a href="index.html" class="back-link">← Back to Home</a>
-    </div>
+<script>
+(async function () {
+  const postsEl = document.getElementById('posts');
+  try {
+    const res = await fetch('/api/articles?_=' + Date.now());
+    if (!res.ok) throw new Error('Failed to load articles');
+    const data = await res.json();
+    const articles = data.articles || [];
 
-    <footer>
-        &copy; 2026 Boostinger. All rights reserved.
-    </footer>
+    if (articles.length === 0) {
+      postsEl.innerHTML = '<div class="empty">No posts yet. Check back soon.</div>';
+      return;
+    }
+
+    postsEl.innerHTML = articles.map(a => {
+      const date = a.published_at ? new Date(a.published_at).toLocaleDateString('en-US', {
+        year: 'numeric', month: 'long', day: 'numeric'
+      }) : '';
+      const excerpt = a.meta_description || '';
+      return `
+        <a class="post-card" href="/blog/${encodeURIComponent(a.slug)}">
+          <div class="meta">${escapeHtml(date)}</div>
+          <h2>${escapeHtml(a.title)}</h2>
+          <div class="excerpt">${escapeHtml(excerpt)}</div>
+          <span class="read-more">Read more →</span>
+        </a>
+      `;
+    }).join('');
+  } catch (err) {
+    console.error(err);
+    postsEl.innerHTML = '<div class="empty">Unable to load posts right now.</div>';
+  }
+
+  function escapeHtml(s) {
+    return String(s || '').replace(/[&<>"']/g, c => ({
+      '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+    }[c]));
+  }
+})();
+</script>
+
 </body>
 </html>
