@@ -9,8 +9,8 @@ import Stripe from 'stripe';
 const PRICES = {
   basic: {
     label: 'Basic',
-    noBoost: { deposit: 500,  monthly: 75,  total: 575  },
-    boost:   { deposit: 500,  monthly: 200, total: 700  }
+    noBoost: { deposit: 550,  monthly: 75,  total: 625 },
+    boost:   { deposit: 550,  monthly: 200, total: 750 }
   },
   standard: {
     label: 'Standard',
