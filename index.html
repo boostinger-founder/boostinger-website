@@ -554,30 +554,19 @@
 .asteroid {
   position: fixed;
   top: 15%;
-  right: -120px;
-  width: 90px;
-  height: 90px;
-  border-radius: 50%;
+  right: -180px; 
+  width: 150px;
+  height: 150px;
   z-index: -1;
   pointer-events: none;
-  background: radial-gradient(circle at 32% 30%, #5a5a5a 0%, #2f2f2f 55%, #141414 100%);
-  box-shadow:
-    inset -14px -14px 26px rgba(0,0,0,0.7),
-    inset 8px 8px 16px rgba(255,255,255,0.05),
-    0 0 40px rgba(255,150,50,0.12);
+  background-image: url('asteroid.png'); /* Ensure your image is named asteroid.png in the same folder */
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  mix-blend-mode: multiply; /* Removes the white background of the image */
   animation: drift-asteroid 60s linear infinite;
   animation-delay: 3s;
 }
-.asteroid::before,
-.asteroid::after {
-  content: "";
-  position: absolute;
-  border-radius: 50%;
-  background: rgba(0,0,0,0.4);
-  box-shadow: inset 2px 2px 4px rgba(255,255,255,0.08);
-}
-.asteroid::before { width: 22%; height: 22%; top: 26%; left: 28%; }
-.asteroid::after  { width: 13%; height: 13%; top: 62%; left: 55%; }
 
 @keyframes drift-asteroid {
   0%   { transform: translate3d(0, 0, 0) rotate(0deg);     opacity: 0; }
